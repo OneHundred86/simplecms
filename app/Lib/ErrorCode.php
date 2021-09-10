@@ -12,7 +12,7 @@ class ErrorCode
 
   const VERICODE_ERROR = 1200;
   const USER_NOT_EXISTS = 1201;
-  const PASSWORD_ERROR = 1202;
+  const USER_PASSWORD_ERROR = 1201;
   const USER_BANED = 1203;
   const USER_NOT_ALLOWED = 1204;
   const PRIVATEAPI_TIME_EMPTY = 1301;
@@ -52,7 +52,7 @@ class ErrorCode
         return '帐号不存在或者密码错误';
       case self::USER_BANED:
         return '用户帐号已被冻结，请联系管理员';
-      case self::PASSWORD_ERROR:
+      case self::USER_PASSWORD_ERROR:
         return '帐号不存在或者密码错误';
       case self::USER_NOT_ALLOWED:
         return '权限不足，不允许该操作';

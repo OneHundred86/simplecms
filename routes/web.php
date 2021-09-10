@@ -24,7 +24,9 @@ Route::group(
         Route::any('debug/session', 'DebugController@session');
         Route::any('debug/login', 'DebugController@login');
         //
+        Route::get('verify/code', 'VerifyController@imageCode');
         Route::get('/admin/login', 'Admin\AdminController@loginPage')->name('adminLogin');
+        Route::post('/admin/login', 'Admin\AdminController@login');
     }
 );
 
@@ -35,7 +37,8 @@ Route::group(
         'prefix' => 'admin',
         'namespace' => 'Admin',
     ], function () {
-        Route::get('/index', 'AdminController@index');
+        Route::get('/index', 'AdminController@index')->name('adminIndex');
+        Route::get('/logout', 'AdminController@logout');
     }
 );
 
@@ -45,6 +48,6 @@ Route::group(
         'prefix' => 'admin',
         'namespace' => 'Admin',
     ], function () {
-    Route::get('/index', 'AdminController@index');
-}
+
+    }
 );
