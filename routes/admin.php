@@ -17,7 +17,7 @@ Route::group(
         'prefix' => 'user'
     ],
     function () {
-        Route::post('info', 'UserController@info');
+        Route::post('info', 'SelfController@info');
     }
 );
 

@@ -41,7 +41,7 @@
         </div>
         <div class="layui-form-item" style="padding-bottom: 20px; text-align: center">
             <div class="layui-inline">
-                <button type="button" class="layui-btn layui-btn-normal" lay-filter="login" style="width: 150px;">登录</button>
+                <button type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="login" style="width: 150px;">登录</button>
             </div>
         </div>
     </form>

@@ -38,16 +38,19 @@ Route::group(
         'namespace' => 'Admin',
     ], function () {
         Route::get('/index', 'AdminController@index')->name('adminIndex');
+        Route::get('/article', 'ArticleController@articlePage');
         Route::get('/logout', 'AdminController@logout');
     }
 );
 
 Route::group(
     [
-        'middleware' => ['adminApi'],
+        'middleware' => ['adminApi:user'],
         'prefix' => 'admin',
         'namespace' => 'Admin',
     ], function () {
-
+        Route::get('/self/user/info', 'SelfController@userInfo');
+        Route::get('/category/list', 'CategoryController@lists');
+        Route::get('/article/list', 'ArticleController@lists');
     }
 );

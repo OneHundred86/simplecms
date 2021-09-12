@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Lib\ErrorCode;
 use App\Lib\Session;
 use App\Lib\Vericode;
+use App\Model\Category;
 use App\Model\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -19,7 +20,13 @@ class AdminController extends Controller
 
     public function index(Request $request, UserEntity $user)
     {
-        return view("admin/index");
+        $category_list = Category::get();
+        $cat_id = $request->input('cat', $category_list->first()->id);
+
+        return view("admin/index", [
+            'category_list' => $category_list,
+            'cat_id' => $cat_id,
+        ]);
     }
 
     public function login(Request $request)
