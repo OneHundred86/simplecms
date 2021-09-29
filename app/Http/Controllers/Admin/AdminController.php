@@ -59,6 +59,6 @@ class AdminController extends Controller
     {
         Session::eraseLoginUserID();
 
-        return $this->redirect2RouteName('adminIndex');
+        return $this->o();
     }
 }

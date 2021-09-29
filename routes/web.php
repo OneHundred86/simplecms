@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome', ['name' => 'world', 'test' => 'abc']);
 });
 
 // public
@@ -30,27 +30,57 @@ Route::group(
     }
 );
 
-
+// 站点前台路由
 Route::group(
     [
-        'middleware' => ['adminPage'],
-        'prefix' => 'admin',
-        'namespace' => 'Admin',
-    ], function () {
-        Route::get('/index', 'AdminController@index')->name('adminIndex');
-        Route::get('/article', 'ArticleController@articlePage');
-        Route::get('/logout', 'AdminController@logout');
+        'prefix' => env('SITE_URL_PREFIX'),
+    ],
+    function (){
+        Route::get('about.html', 'SitePageController@about');
+        Route::get('product.html', 'SitePageController@product');
+        Route::get('article.html', 'SitePageController@article');
+        Route::get('contact.html', 'SitePageController@contact');
+        Route::get('news.html', 'SitePageController@news');
+        Route::get('index.html', 'SitePageController@index');
+        Route::get('prod_nay.html', 'SitePageController@prod_nay');
+
+
+        Route::get('category/{id}', 'SitePageController@category')->where('id', '\d+');
+        Route::get('article/{id}', 'SitePageController@article')->where('id', '\d+');
+        // 该路由一定要放在最下面
+        Route::any('{path}', 'SitePageController@route')->where('path', '.*');
     }
 );
 
-Route::group(
-    [
-        'middleware' => ['adminApi:user'],
-        'prefix' => 'admin',
-        'namespace' => 'Admin',
-    ], function () {
-        Route::get('/self/user/info', 'SelfController@userInfo');
-        Route::get('/category/list', 'CategoryController@lists');
-        Route::get('/article/list', 'ArticleController@lists');
-    }
-);
+
+//Route::group(
+//    [
+//        'middleware' => ['adminPage'],
+//        'prefix' => 'admin',
+//        'namespace' => 'Admin',
+//    ], function () {
+//        Route::get('/', 'AdminController@index')->name('adminIndex');
+//    }
+//);
+
+//Route::group(
+//    [
+//        'middleware' => ['adminApi:user'],
+//        'prefix' => 'admin',
+//        'namespace' => 'Admin',
+//    ], function () {
+//        Route::get('/logout', 'AdminController@logout');
+//
+//        Route::get('/self/user/info', 'SelfController@userInfo');
+//        Route::get('/category/list', 'CategoryController@lists');
+//        Route::get('/category/info', 'CategoryController@info');
+//        Route::post('/category/add', 'CategoryController@add');
+//        Route::post('/category/edit', 'CategoryController@edit');
+//        Route::post('/category/del', 'CategoryController@del');
+//
+//        Route::get('/article/list', 'ArticleController@lists');
+//        Route::get('/article/');
+//
+//        Route::any('/ueditor/upload', 'UEditorController@upload');
+//    }
+//);

@@ -19,8 +19,8 @@
         .error-box{
             position: relative;
             width: 1054px;
-            height: 654px;
-            background: url('{{asset('/static/core/img/error.png')}}');
+            height: 400px;
+            {{--background: url('{{asset('/static/core/img/error.png')}}');--}}
             margin: 100px auto 0 auto;
         }
         .error-text{
@@ -60,10 +60,9 @@
 </head>
 <body>
 <div class="error-box">
-    <p class="error-text">错误原因：{{ $msg }}</p>
+    <p class="error-text">页面出错了，错误原因：{{ $msg }}</p>
     <div class="row">
         <a class="first" href="javascript:void(0);" onclick="history.go(-1)">返回</a>
-        <a href="{{url('/')}}">去首页</a>
     </div>
 </div>
 </body>

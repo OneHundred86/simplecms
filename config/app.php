@@ -160,6 +160,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        //Ender\UEditor\UEditorServiceProvider::class,
+        Overtrue\LaravelUEditor\UEditorServiceProvider::class,
 
     ],
 
@@ -213,6 +215,7 @@ return [
         'ErrorCode' => App\Lib\ErrorCode::class,
         'User' => App\Lib\User::class,
         'HttpClient' => App\Lib\HttpClient::class,
+        //'UEditor'   => Ender\UEditor\UEditor::class,
     ],
 
 ];

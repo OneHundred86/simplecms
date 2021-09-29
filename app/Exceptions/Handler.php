@@ -55,7 +55,8 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         // dd($exception);
-        $isGetMethod = $request->isMethod('GET');
+        // $isGetMethod = $request->isMethod('GET');
+        $isAjax = $request->ajax();
 
         // 自定义错误码异常捕捉
         if($exception instanceof ErrorCodeException){
@@ -63,7 +64,7 @@ class Handler extends ExceptionHandler
             $msg = $exception->getMessage();
             $data = $exception->getData();
 
-            if($isGetMethod){
+            if(!$isAjax){
                 $statusCode = $code >= 100 && $code <= 599 ? $code : 200;
                 return $this->errorPage($msg ?: $code, $statusCode);
             }else{
@@ -76,7 +77,7 @@ class Handler extends ExceptionHandler
             $msg = $exception->getMessage();
 
             // 自定义处理的异常http状态码页面
-            if($isGetMethod)
+            if(!$isAjax)
                 return $this->errorPage($msg ?: $statusCode, $statusCode);
             else
                 return $this->e($statusCode, $msg);
@@ -85,7 +86,7 @@ class Handler extends ExceptionHandler
         if($exception instanceof ValidationException){
             $statusCode = $exception->status; // 422
 
-            if($isGetMethod){
+            if(!$isAjax){
                 return $this->errorPage($statusCode, $statusCode);
             }else{
                 return $this->e($statusCode, '', $exception->errors());
@@ -101,7 +102,7 @@ class Handler extends ExceptionHandler
         if($exception instanceof FatalErrorException && !env('APP_DEBUG')){
             // 自定义处理的异常http状态码页面
             $statusCode = 500;
-            if($isGetMethod)
+            if(!$isAjax)
                 return $this->errorPage($statusCode, $statusCode);
             else
                 return $this->e($statusCode);
