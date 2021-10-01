@@ -46,9 +46,9 @@ class ArticleController extends Controller
             ->find($request->id);
 
         if(!$info){
-            return $this->e('稿件信息不存在');
+            return $this->e(404,'稿件信息不存在');
         }elseif($info->status != Article::STATUS_PUB){
-            return $this->e('稿件信息不存在(1)');
+            return $this->e(404,'稿件信息不存在(1)');
         }
 
         return $this->o(compact('info'));
