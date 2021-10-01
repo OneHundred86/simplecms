@@ -13,7 +13,7 @@ class User extends Model
 
     # The attributes that should be hidden for arrays.
     protected $hidden = [
-        'password', 'updated_at', 'deleted_at',
+        'password', 'ban', 'updated_at', 'deleted_at',
     ];
 
     // 校验密码

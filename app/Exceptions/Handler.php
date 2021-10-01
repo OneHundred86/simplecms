@@ -54,8 +54,6 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        // dd($exception);
-        // $isGetMethod = $request->isMethod('GET');
         $isAjax = $request->ajax();
 
         // 自定义错误码异常捕捉

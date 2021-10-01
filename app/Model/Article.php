@@ -9,19 +9,52 @@ class Article extends Model
 {
     use SoftDeletes;
     protected $table = "article";
-    protected $fillable = ['title', 'content', 'category_id', 'status'];
     protected $hidden = ['deleted_at'];
 
+    // 文章状态
     const STATUS_DRAFT = 0;     # 草稿
     const STATUS_PUB = 1;       # 已发布
 
-    public function category()
+    // 栏目类型
+    const CATEGORY_OTHER = 0;   # 其他
+    const CATEGORY_PRODUCT = 1; # 产品中心
+    const CATEGORY_APP = 2;     # 行业应用
+    const CATEGORY_NEWS = 3;    # 新闻中心
+
+    /**
+     * 文章分类
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function type()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(ArticleType::class, 'type_id');
     }
 
-    public function test()
+    /**
+     * 文章封面
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function covers()
     {
-        return __METHOD__;
+        return $this->hasMany(ArticleCover::class);
+    }
+
+    /**
+     * 设置
+     * @param array|null $list
+     */
+    public function setCovers(?array $list)
+    {
+        $this->covers()->delete();
+        if(empty($list)){
+            return true;
+        }
+
+        foreach($list as $img){
+            $this->covers()->create([
+                'article_id' => $this->id,
+                'img' => $img,
+            ]);
+        }
     }
 }

@@ -13,22 +13,6 @@ use App\Entity\User as UserEntity;
 
 class AdminController extends Controller
 {
-    public function loginPage(Request $request)
-    {
-        return view("admin/login");
-    }
-
-    public function index(Request $request, UserEntity $user)
-    {
-        $category_list = Category::get();
-        $cat_id = $request->input('cat', $category_list->first()->id);
-
-        return view("admin/index", [
-            'category_list' => $category_list,
-            'cat_id' => $cat_id,
-        ]);
-    }
-
     public function login(Request $request)
     {
         $this->validate($request, [

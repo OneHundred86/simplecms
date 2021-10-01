@@ -6,7 +6,6 @@ Route::group(
         'middleware' => 'adminPage',
     ],
     function () {
-        Route::get('/', 'AdminController@index')->name('adminIndex');
     }
 );
 
@@ -19,21 +18,23 @@ Route::group(
         Route::get('/self/user/info', 'SelfController@userInfo');
         Route::get('/logout', 'AdminController@logout');
 
-        Route::get('/category/list', 'CategoryController@lists');
-        Route::get('/category/info', 'CategoryController@info');
-        Route::post('/category/add', 'CategoryController@add');
-        Route::post('/category/edit', 'CategoryController@edit');
-        Route::post('/category/del', 'CategoryController@del');
-
         Route::get('/article/list', 'ArticleController@lists');
         Route::get('/article/info', 'ArticleController@info');
         Route::post('/article/add', 'ArticleController@add');
         Route::post('/article/edit', 'ArticleController@edit');
         Route::post('/article/del', 'ArticleController@del');
-        Route::post('/article/pub', 'ArticleController@publish');
+        Route::post('/article/publish', 'ArticleController@publish');
         Route::post('/article/withdraw', 'ArticleController@withdraw');
 
-        Route::any('/ueditor/upload', 'UEditorController@upload');
+        Route::get('/article/type/list', 'ArticleTypeController@lists');
+        Route::post('/article/type/add', 'ArticleTypeController@add');
+        Route::post('/article/type/edit', 'ArticleTypeController@edit');
+        Route::post('/article/type/del', 'ArticleTypeController@del');
+
+
+        Route::post('/upload/image', 'MaterialController@uploadImage');
+        Route::post('/upload/vedio', 'MaterialController@uploadVedio');
+
     }
 );
 

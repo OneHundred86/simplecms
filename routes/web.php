@@ -23,9 +23,10 @@ Route::group(
         // debug
         Route::any('debug/session', 'DebugController@session');
         Route::any('debug/login', 'DebugController@login');
-        //
+
+        // 图片验证码
         Route::get('verify/code', 'VerifyController@imageCode');
-        Route::get('/admin/login', 'Admin\AdminController@loginPage')->name('adminLogin');
+        // 登录
         Route::post('/admin/login', 'Admin\AdminController@login');
     }
 );
@@ -36,6 +37,10 @@ Route::group(
         'prefix' => env('SITE_URL_PREFIX'),
     ],
     function (){
+        Route::get('article/list', 'ArticleController@lists');
+        Route::get('article/info', 'ArticleController@info');
+        Route::get('article/type/list', 'ArticleController@typeList');
+
         Route::get('about.html', 'SitePageController@about');
         Route::get('product.html', 'SitePageController@product');
         Route::get('article.html', 'SitePageController@article');
@@ -51,36 +56,3 @@ Route::group(
         Route::any('{path}', 'SitePageController@route')->where('path', '.*');
     }
 );
-
-
-//Route::group(
-//    [
-//        'middleware' => ['adminPage'],
-//        'prefix' => 'admin',
-//        'namespace' => 'Admin',
-//    ], function () {
-//        Route::get('/', 'AdminController@index')->name('adminIndex');
-//    }
-//);
-
-//Route::group(
-//    [
-//        'middleware' => ['adminApi:user'],
-//        'prefix' => 'admin',
-//        'namespace' => 'Admin',
-//    ], function () {
-//        Route::get('/logout', 'AdminController@logout');
-//
-//        Route::get('/self/user/info', 'SelfController@userInfo');
-//        Route::get('/category/list', 'CategoryController@lists');
-//        Route::get('/category/info', 'CategoryController@info');
-//        Route::post('/category/add', 'CategoryController@add');
-//        Route::post('/category/edit', 'CategoryController@edit');
-//        Route::post('/category/del', 'CategoryController@del');
-//
-//        Route::get('/article/list', 'ArticleController@lists');
-//        Route::get('/article/');
-//
-//        Route::any('/ueditor/upload', 'UEditorController@upload');
-//    }
-//);

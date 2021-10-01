@@ -13,18 +13,23 @@ class ArticleController extends Controller
     public function lists(Request $request)
     {
         $this->validate($request, [
-            'category_id' => 'required|integer',
+            'category' => 'required|integer',
+            'type_id' => 'nullable|integer',
             'kw' => 'nullable|string',
-            'page' => 'required|integer|min:1',
+            'offset' => 'required|integer',
             'limit' => 'required|integer',
         ]);
 
         $kw = $request->kw;
         $limit = $request->limit;
-        $offset = ($request->page - 1) * $limit;
+        $offset = $request->offset;
 
         $builder = Article::query();
-        $builder->where('category_id', $request->category_id);
+        $builder->where('category', $request->category);
+
+        if($request->type_id){
+            $builder->where('type_id', $request->type_id);
+        }
 
         if($kw){
             $builder->where('title', 'like', "%$kw%");
@@ -34,8 +39,9 @@ class ArticleController extends Controller
         $list = $builder->orderBy('id', 'desc')
             ->offset($offset)
             ->limit($limit)
-            ->get()
-            ->makeHidden('content');
+            ->select('id', 'category', 'type_id', 'title', 'status', 'read_cnt', 'created_at', 'updated_at')
+            ->with('type')
+            ->get();
 
         return $this->o(compact('total', 'list'));
     }
@@ -46,7 +52,10 @@ class ArticleController extends Controller
             'id' => 'required|integer',
         ]);
 
-        $info = Article::find($request->id);
+        $info = Article::with('type')
+            ->with('covers')
+            ->find($request->id);
+
         if(!$info){
             return $this->e('稿件信息不存在');
         }
@@ -57,12 +66,24 @@ class ArticleController extends Controller
     public function add(Request $request)
     {
         $this->validate($request, [
-            'category_id' => 'required|integer|exists:category,id',
+            'category' => 'required|integer',
             'title' => 'required|string',
+            'summary' => 'nullable|string',
             'content' => 'required|string',
+            'type_id' => 'nullable|integer',
+            'covers' => 'nullable|array',
         ]);
 
-        $article = Article::create($request->all());
+
+        $m = new Article();
+        $m->category = $request->category;
+        $m->title = $request->title;
+        $m->summary = $request->summary;
+        $m->content = $request->input('content');
+        $m->type_id = $request->type_id;
+        $m->save();
+
+        $m->setCovers($request->covers);
 
         return $this->o();
     }
@@ -72,19 +93,27 @@ class ArticleController extends Controller
         $this->validate($request, [
             'id' => 'required|integer',
             'title' => 'required|string',
+            'summary' => 'nullable|string',
             'content' => 'required|string',
+            'type_id' => 'nullable|integer',
+            'covers' => 'nullable|array',
         ]);
 
-        $article = Article::find($request->id);
-        if(!$article){
+        $m = Article::find($request->id);
+        if(!$m){
             return $this->e('稿件信息不存在');
         }
 
-        $arr = $request->all();
-        $arr['status'] = Article::STATUS_DRAFT;
-        $article->update($arr);
+        $m->title = $request->title;
+        $m->summary = $request->summary;
+        $m->content = $request->input('content');
+        $m->type_id = $request->type_id;
+        $m->status = Article::STATUS_DRAFT;
+        $m->save();
 
-        return $this->e();
+        $m->setCovers($request->covers);
+
+        return $this->o();
     }
 
     public function del(Request $request)

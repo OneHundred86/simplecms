@@ -15,10 +15,29 @@ class Article extends Migration
     {
         Schema::create('article', function(Blueprint $table){
             $table->increments('id');
+            $table->integer('category')->index();
             $table->string('title');
+            $table->text('summary')->nullable();
             $table->mediumText('content');
-            $table->unsignedInteger('category_id');
+            $table->tinyInteger('status')->default('0');
+            $table->integer('type_id')->nullable()->index();
+            $table->integer('read_cnt')->default('0');
             $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('article_cover', function (Blueprint $table){
+            $table->increments('id');
+            $table->integer('article_id')->index();
+            $table->string('img');
+        });
+
+        Schema::create('article_type', function (Blueprint $table){
+            $table->increments('id');
+            $table->integer('category')->index();
+            $table->string('name');
+            $table->integer('parent_id')->nullable()->index();
+            $table->softDeletes();
         });
     }
 
@@ -30,5 +49,7 @@ class Article extends Migration
     public function down()
     {
         Schema::drop('article');
+        Schema::drop('article_cover');
+        Schema::drop('article_type');
     }
 }
