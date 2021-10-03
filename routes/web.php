@@ -41,12 +41,12 @@ Route::group(
         Route::get('article/info', 'ArticleController@info');
         Route::get('article/type/list', 'ArticleController@typeList');
 
+        Route::get('index.html', 'SitePageController@index');
         Route::get('about.html', 'SitePageController@about');
         Route::get('product.html', 'SitePageController@product');
         Route::get('article.html', 'SitePageController@article');
         Route::get('contact.html', 'SitePageController@contact');
         Route::get('news.html', 'SitePageController@news');
-        Route::get('index.html', 'SitePageController@index');
         Route::get('prod_nay.html', 'SitePageController@prod_nay');
 
 
