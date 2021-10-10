@@ -5,49 +5,12 @@ import {
     ArticleEditRequest, ArticleFilter,
     ArticleListResponse,
 } from '../models';
-import { catchError, of } from 'rxjs';
 
 class ArticleDataService {
     getList = (params: ArticleFilter) => {
         return request<ArticleListResponse>('/admin/article/list', 'GET', {
             params
-        }).pipe(
-            catchError(err =>{
-                return of({
-                    errcode: 0,
-                    errmessage: '',
-                    data: {
-                        total: 100,
-                        list: [
-                            {
-                                id: 1,
-                                category: 0,
-                                title: 'Title',
-                                summary: '',
-                                content: '',
-                                type_id: 1,
-                                status: 0,
-                                read_cnt: 400,
-                                created_at: '',
-                                updated_at: '',
-                            },
-                            {
-                                id: 2,
-                                category: 0,
-                                title: 'Title',
-                                summary: '',
-                                content: '',
-                                type_id: 1,
-                                status: 1,
-                                read_cnt: 400,
-                                created_at: '',
-                                updated_at: '',
-                            }
-                        ]
-                    }
-                })
-            })
-        );
+        });
     };
 
     getDetail = (id: number) => {
