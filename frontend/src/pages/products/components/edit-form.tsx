@@ -17,6 +17,7 @@ import { ActionService, ArticleDataService, ArticleTypeDataService, FileUploadSe
 import { UploadAdaptorPlugin } from '../../../components/form/upload-adaptor-plugin';
 import { switchMap } from 'rxjs';
 import { useHistory } from 'react-router';
+import { useSnackbar } from 'notistack';
 
 export const EditForm: React.FC<{ detail: Article }> = ({
                                                             detail,
@@ -25,13 +26,21 @@ export const EditForm: React.FC<{ detail: Article }> = ({
     const [categoryList, setCategoryList] = useState<ArticleType[]>([]);
     const [selectedRootCategory, setSelectedRootCategory] = useState<ArticleType>(null);
     const history = useHistory();
+    const snackBar = useSnackbar();
 
     useEffect(() => {
-        ArticleTypeDataService.getList(0).subscribe((resp: ArticleTypeListResponse) => {
-            const categoryList = resp.data.list;
-            setCategoryList(categoryList);
+        ArticleTypeDataService.getList(0).subscribe({
+            next: (resp: ArticleTypeListResponse) => {
+                const categoryList = resp.data.list;
+                setCategoryList(categoryList);
+            }, error: (err) => {
+                console.error('fail to fetch article type list', err);
+                snackBar.enqueueSnackbar('获取产品类型信息失败', {
+                    variant: 'error',
+                });
+            },
         });
-    }, []);
+    }, [snackBar]);
     useEffect(() => {
         if (formDetail.type_id >= 0) {
             const selectedRootCategory = categoryList.find(x => x.id === formDetail.type_id);
@@ -56,14 +65,23 @@ export const EditForm: React.FC<{ detail: Article }> = ({
                 type_id: formDetail.type_id,
                 covers: formDetail.covers.map(x => x.img),
             });
-        })).subscribe(() => {
-            history.push('/admin/products');
+        })).subscribe({
+            next: () => {
+                history.push('/admin/products');
+                snackBar.enqueueSnackbar('保存产品信息成功', {
+                    variant: 'success',
+                });
+            }, error: () => {
+                snackBar.enqueueSnackbar('保存产品失败', {
+                    variant: 'error',
+                });
+            },
         });
 
         return () => {
             saveAction.unsubscribe();
         };
-    }, [formDetail]);
+    }, [formDetail, snackBar, history]);
 
     const rootCategoryList: () => ArticleType[] = () => {
         return categoryList.filter(x => !x.parent_id);
@@ -105,20 +123,27 @@ export const EditForm: React.FC<{ detail: Article }> = ({
             const formData = new FormData();
             formData.append('file', files[0]);
 
-            FileUploadService.postImage(formData).subscribe((resp) => {
-                setFormDetail((state) => {
-                    const covers = state.covers ?? [];
-                    covers.push({
-                        id: -Math.ceil(Math.random() * 1000),
-                        article_id: formDetail.id,
-                        img: resp.data.url,
-                    });
+            FileUploadService.postImage(formData).subscribe({
+                next: (resp) => {
+                    setFormDetail((state) => {
+                        const covers = state.covers ?? [];
+                        covers.push({
+                            id: -Math.ceil(Math.random() * 1000),
+                            article_id: formDetail.id,
+                            img: resp.data.url,
+                        });
 
-                    return {
-                        ...state,
-                        covers,
-                    };
-                });
+                        return {
+                            ...state,
+                            covers,
+                        };
+                    });
+                }, error: (err) => {
+                    console.error('fail to upload image', err);
+                    snackBar.enqueueSnackbar(' 上传封面失败', {
+                        variant: 'error',
+                    });
+                },
             });
         }
     }

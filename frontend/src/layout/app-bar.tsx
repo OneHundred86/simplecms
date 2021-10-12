@@ -1,8 +1,9 @@
-import React from 'react';
-import { Badge, IconButton, styled, Toolbar, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { IconButton, styled, Toolbar, Typography } from '@mui/material';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import MenuIcon from '@mui/icons-material/Menu';
+import { PortalMessageService } from '../services';
+import { CHANNEL_APP_BAR_TITLE } from '../components/portal';
 
 interface AppBarProps extends MuiAppBarProps {
     open?: boolean;
@@ -26,31 +27,44 @@ const StyleAppBar = styled(MuiAppBar, {
     }),
 }));
 
-export const AppBar: React.FC<{ open; toggleDrawer }> = ({ open, toggleDrawer }) => (
-    <StyleAppBar position='absolute' open={open}>
-        <Toolbar
-            sx={{
-                pr: '24px', // keep right padding when drawer closed
-            }}>
-            <IconButton
-                edge='start'
-                color='inherit'
-                aria-label='open drawer'
-                onClick={toggleDrawer}
+export const AppBar: React.FC<{ open; toggleDrawer; }> = ({
+                                                              open,
+                                                              toggleDrawer,
+                                                          }) => {
+    const [title, setTitle] = useState(null);
+
+    useEffect(() => {
+        const titleSubscription = PortalMessageService.onMessage(CHANNEL_APP_BAR_TITLE).subscribe((newTitle) => {
+            setTitle(newTitle);
+        });
+
+        return () => {
+            titleSubscription.unsubscribe();
+        }
+    }, [])
+
+    return (
+        <StyleAppBar position='absolute' open={open}>
+            <Toolbar
                 sx={{
-                    marginRight: '36px',
-                    ...(open && { display: 'none' }),
+                    pr: '24px', // keep right padding when drawer closed
                 }}>
-                <MenuIcon />
-            </IconButton>
-            <Typography component='h1' variant='h6' color='inherit' noWrap sx={{ flexGrow: 1 }}>
-                Dashboard
-            </Typography>
-            <IconButton color='inherit'>
-                <Badge badgeContent={4} color='secondary'>
-                    <NotificationsIcon />
-                </Badge>
-            </IconButton>
-        </Toolbar>
-    </StyleAppBar>
-);
+                <IconButton
+                    edge='start'
+                    color='inherit'
+                    aria-label='open drawer'
+                    onClick={toggleDrawer}
+                    sx={{
+                        marginRight: '36px',
+                        ...(open && { display: 'none' }),
+                    }}>
+                    <MenuIcon />
+                </IconButton>
+                <Typography component='h1' variant='h6' color='inherit' noWrap
+                            sx={{ flexGrow: 1 }}>
+                    {title}
+                </Typography>
+            </Toolbar>
+        </StyleAppBar>
+    );
+};

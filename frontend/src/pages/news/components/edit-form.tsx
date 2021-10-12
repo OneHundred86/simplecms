@@ -17,6 +17,7 @@ import { ActionService, ArticleDataService, ArticleTypeDataService, FileUploadSe
 import { UploadAdaptorPlugin } from '../../../components/form/upload-adaptor-plugin';
 import { switchMap } from 'rxjs';
 import { useHistory } from 'react-router';
+import { useSnackbar } from 'notistack';
 
 export const EditForm: React.FC<{ detail: Article }> = ({
                                                             detail,
@@ -24,6 +25,7 @@ export const EditForm: React.FC<{ detail: Article }> = ({
     const [formDetail, setFormDetail] = useState<Article>(detail);
     const [categoryList, setCategoryList] = useState<ArticleType[]>([]);
     const history = useHistory();
+    const snackBar = useSnackbar();
 
     useEffect(() => {
         ArticleTypeDataService.getList(2).subscribe((resp: ArticleTypeListResponse) => {
@@ -49,14 +51,25 @@ export const EditForm: React.FC<{ detail: Article }> = ({
                 type_id: formDetail.type_id,
                 covers: formDetail.covers.map(x => x.img),
             });
-        })).subscribe(() => {
-            history.push('/admin/news');
+        })).subscribe({
+            next: () => {
+                history.push('/admin/news');
+
+                snackBar.enqueueSnackbar(' 保存新闻成功', {
+                    variant: 'success',
+                });
+            }, error: err => {
+                console.error('fail to save news ', err);
+                snackBar.enqueueSnackbar(' 保存新闻失败', {
+                    variant: 'error',
+                });
+            },
         });
 
         return () => {
             saveAction.unsubscribe();
         };
-    }, [formDetail]);
+    }, [formDetail, snackBar, history]);
 
     function updateInputValue(key: string): (e: ChangeEvent<HTMLInputElement>) => void {
         return (e) => {
@@ -169,7 +182,7 @@ export const EditForm: React.FC<{ detail: Article }> = ({
                                             alt={''}
                                         />
                                     </ImageListItem>
-                                )) ?? <div/>}
+                                )) ?? <div />}
                             </ImageList>
                         </Grid>
                     </Grid>

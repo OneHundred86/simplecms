@@ -17,6 +17,7 @@ import { ActionService, ArticleDataService, ArticleTypeDataService, FileUploadSe
 import { UploadAdaptorPlugin } from '../../../components/form/upload-adaptor-plugin';
 import { switchMap } from 'rxjs';
 import { useHistory } from 'react-router';
+import { useSnackbar } from 'notistack';
 
 export const EditForm: React.FC<{ detail: Article }> = ({
                                                             detail,
@@ -25,6 +26,8 @@ export const EditForm: React.FC<{ detail: Article }> = ({
     const [categoryList, setCategoryList] = useState<ArticleType[]>([]);
 
     const history = useHistory();
+    const snackBar = useSnackbar();
+
     useEffect(() => {
         ArticleTypeDataService.getList(1).subscribe((resp: ArticleTypeListResponse) => {
             const categoryList = resp.data.list;
@@ -49,14 +52,25 @@ export const EditForm: React.FC<{ detail: Article }> = ({
                 type_id: formDetail.type_id,
                 covers: formDetail.covers.map(x => x.img),
             });
-        })).subscribe(() => {
-            history.push('/admin/applications');
+        })).subscribe({
+            next: () => {
+                history.push('/admin/applications');
+
+                snackBar.enqueueSnackbar('  保存行业信息成功', {
+                    variant: 'success',
+                });
+            }, error: (err) => {
+                console.error('fail to fetch application list', err);
+                snackBar.enqueueSnackbar(' 保存行业信息失败', {
+                    variant: 'error',
+                });
+            },
         });
 
         return () => {
             saveAction.unsubscribe();
         };
-    }, [formDetail]);
+    }, [formDetail, snackBar, history]);
 
     function updateInputValue(key: string): (e: ChangeEvent<HTMLInputElement>) => void {
         return (e) => {

@@ -17,12 +17,14 @@ import { ActionService, ArticleDataService, FileUploadService } from '../../../s
 import { UploadAdaptorPlugin } from '../../../components/form/upload-adaptor-plugin';
 import { switchMap } from 'rxjs';
 import { useHistory } from 'react-router';
+import { useSnackbar } from 'notistack';
 
 export const EditForm: React.FC<{ detail: Article }> = ({
                                                             detail,
                                                         }) => {
     const [formDetail, setFormDetail] = useState<Article>(detail);
     const history = useHistory();
+    const snackBar = useSnackbar();
 
     useEffect(() => {
         const saveAction = ActionService.handleAction('save').pipe(switchMap(() => {
@@ -41,14 +43,21 @@ export const EditForm: React.FC<{ detail: Article }> = ({
                 type_id: formDetail.type_id,
                 covers: formDetail.covers.map(x => x.img),
             });
-        })).subscribe(() => {
-            history.push('/admin/others');
+        })).subscribe({
+            next: () => {
+                history.push('/admin/others');
+            }, error: (err) => {
+                console.error('fail to save others', err);
+                snackBar.enqueueSnackbar(' 保存其他信息失败', {
+                    variant: 'error',
+                });
+            },
         });
 
         return () => {
             saveAction.unsubscribe();
         };
-    }, [formDetail]);
+    }, [formDetail, snackBar, history]);
 
     function updateInputValue(key: string): (e: ChangeEvent<HTMLInputElement>) => void {
         return (e) => {
@@ -66,20 +75,27 @@ export const EditForm: React.FC<{ detail: Article }> = ({
             const formData = new FormData();
             formData.append('file', files[0]);
 
-            FileUploadService.postImage(formData).subscribe((resp) => {
-                setFormDetail((state) => {
-                    const covers = state.covers ?? [];
-                    covers.push({
-                        id: -Math.ceil(Math.random() * 1000),
-                        article_id: formDetail.id,
-                        img: resp.data.url,
-                    });
+            FileUploadService.postImage(formData).subscribe({
+                next: (resp) => {
+                    setFormDetail((state) => {
+                        const covers = state.covers ?? [];
+                        covers.push({
+                            id: -Math.ceil(Math.random() * 1000),
+                            article_id: formDetail.id,
+                            img: resp.data.url,
+                        });
 
-                    return {
-                        ...state,
-                        covers,
-                    };
-                });
+                        return {
+                            ...state,
+                            covers,
+                        };
+                    });
+                }, error: (err) => {
+                    console.error('fail to upload cover', err);
+                    snackBar.enqueueSnackbar(' 上传封面失败', {
+                        variant: 'error',
+                    });
+                },
             });
         }
     }

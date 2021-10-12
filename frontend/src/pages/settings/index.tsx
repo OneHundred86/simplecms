@@ -11,6 +11,7 @@ import { categoryList, FilterToolbar } from './components/filter-toolbar';
 import { CategoryDetailDialog, CategoryDetailDialogProps } from './components/category-detail-dialog';
 import { ConfirmDeleteDialog, ConfirmDeleteDialogProps } from '../../components/dialog/confirm-delete-dialog';
 import { tap } from 'rxjs';
+import { CHANNEL_APP_BAR_TITLE, Portal } from '../../components/portal';
 
 
 export const Settings = () => {
@@ -199,6 +200,10 @@ export const Settings = () => {
             </Fab>
             <CategoryDetailDialog {...detailDialog} />
             <ConfirmDeleteDialog {...deleteDialog} />
+
+            <Portal channel={CHANNEL_APP_BAR_TITLE}>
+                 类型设置
+            </Portal>
         </Box>
     );
 };

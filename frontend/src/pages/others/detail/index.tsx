@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Article } from '../../../models';
 import { useHistory, useRouteMatch } from 'react-router';
-import { ArticleDataService } from '../../../services';
+import { ActionService, ArticleDataService } from '../../../services';
 import { Button, Grid } from '@mui/material';
 
 import { EditForm } from '../components/edit-form';
 import { ActionMenu } from '../../../components/form/action-menu';
+import { useSnackbar } from 'notistack';
+import { switchMap } from 'rxjs';
 
 export const OtherDetail: React.FC = (props) => {
     const [detail, setDetail] = useState<Article>(
@@ -25,19 +27,64 @@ export const OtherDetail: React.FC = (props) => {
         },
     );
 
+    const snackBar = useSnackbar();
     const history = useHistory();
     const { params } = useRouteMatch<{ id: string }>();
     const { id } = params;
 
     useEffect(() => {
-        let fetchDetail = id ? ArticleDataService.getDetail(parseInt(id)).subscribe((resp) => setDetail(resp.data.info)) : null;
+        let actionSubscription = id ? [
+            ArticleDataService.getDetail(parseInt(id)).subscribe({
+                next: (resp) => setDetail(resp.data.info), error: (err) => {
+                    console.error('fail to fetch others detail', err);
+                    snackBar.enqueueSnackbar(' 获取其他详细信息失败', {
+                        variant: 'error',
+                    });
+                },
+            }),
+            ActionService.handleAction('withdraw').pipe(
+                switchMap(() => ArticleDataService.withdraw(parseInt(id))),
+            ).subscribe({
+                next: () => {
+                    history.push('/admin/others');
+                    snackBar.enqueueSnackbar(' 撤稿成功', {
+                        variant: 'success',
+                    });
+                },
+                error: (err) => {
+                    console.error('fail to publish', err);
+                    snackBar.enqueueSnackbar(' 撤稿失败', {
+                        variant: 'error',
+                    });
+                },
+            }),
+
+            ActionService.handleAction('publish').pipe(
+                switchMap(() => ArticleDataService.publish(parseInt(id))),
+            ).subscribe({
+                next: () => {
+                    history.push('/admin/others');
+                    snackBar.enqueueSnackbar(' 发布成功', {
+                        variant: 'success',
+                    });
+                },
+                error: (err) => {
+                    console.error('fail to publish', err);
+                    snackBar.enqueueSnackbar(' 发布失败', {
+                        variant: 'error',
+                    });
+                },
+            }),
+        ] : [];
 
         return () => {
-            if (fetchDetail) {
-                fetchDetail.unsubscribe();
+            if (actionSubscription.length > 0) {
+                for (const subscription of actionSubscription) {
+                    subscription.unsubscribe();
+                }
             }
         };
-    }, [id]);
+    }, [id, snackBar, history]);
 
     function goBack() {
         history.goBack();

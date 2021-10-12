@@ -11,14 +11,17 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useHistory } from 'react-router';
 import { tap } from 'rxjs';
 import { ConfirmDeleteDialog, ConfirmDeleteDialogProps } from '../../components/dialog/confirm-delete-dialog';
+import { CHANNEL_APP_BAR_TITLE, Portal } from '../../components/portal';
+import { useSnackbar } from 'notistack';
 
-export const Products = () => {
+export const Products: React.FC = () => {
     const [filter, setFilter] = useState<ArticleFilter>({ kw: '', limit: 20, offset: 0, category: 0 });
     const [dataSource, setDataSource] = useState<Article[]>([]);
     const [totalSize, setTotalSize] = useState<number>(1);
     const [deleteDialog, setDeleteDialog] = useState<ConfirmDeleteDialogProps>({ open: false });
 
     const history = useHistory();
+    const snackBar = useSnackbar();
 
     useEffect(() => {
         ArticleDataService.getList(filter).subscribe(({ errcode, data }) => {
@@ -26,10 +29,18 @@ export const Products = () => {
                 setDataSource(data.list);
                 setTotalSize(data.total);
             } else {
-                // TODO: Notify user error
+                console.error('fetch products error', errcode);
+                snackBar.enqueueSnackbar('获取产品列表失败', {
+                    variant: 'error',
+                });
             }
+        }, (err) => {
+            console.error('fetch products error', err);
+            snackBar.enqueueSnackbar('获取产品列表失败', {
+                variant: 'error',
+            });
         });
-    }, [filter]);
+    }, [filter, snackBar]);
 
     function confirmDelete(item: GridRowModel) {
         setDeleteDialog({
@@ -37,13 +48,23 @@ export const Products = () => {
             onClose(): void {
                 setDeleteDialog({ open: false });
             },
-            onConfirm(): void {
+            onConfirm: function(): void {
                 ArticleDataService.delete(item.id).pipe(
                     tap(() => {
                         setFilter({ ...filter });
                         setDeleteDialog({ open: false });
+
+                        snackBar.enqueueSnackbar('删除产品成功', {
+                            variant: 'success',
+                        });
                     }),
-                ).subscribe();
+                ).subscribe({
+                    error: (err) => {
+                        snackBar.enqueueSnackbar(' 删除产品失败', {
+                            variant: 'error',
+                        });
+                    },
+                });
             },
         });
 
@@ -152,6 +173,9 @@ export const Products = () => {
                 <AddIcon />
             </Fab>
             <ConfirmDeleteDialog {...deleteDialog} />
+            <Portal channel={CHANNEL_APP_BAR_TITLE}>
+                产品中心
+            </Portal>
         </Box>
     );
 };

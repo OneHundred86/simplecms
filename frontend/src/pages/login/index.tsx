@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from "react";
 import {
     Avatar,
     Box,
@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { LoginService } from '../../services';
 
 export const Login = () => {
+    const [codeState, setCodeState] = useState(new Date().valueOf());
     const [loginForm, setLoginForm] = useState({
         email: '',
         password: '',
@@ -28,6 +29,13 @@ export const Login = () => {
             [key]: e.target.value,
         }));
     }
+
+    function refreshCode(): void {
+        setCodeState(new Date().valueOf());
+    }
+    const codeUrl = useMemo(() => {
+        return `/verify/code${codeState}`;
+    }, [codeState]);
 
     return (
         <Container maxWidth='xs'>
@@ -80,7 +88,7 @@ export const Login = () => {
                         value={loginForm.code}
                         onChange={updatedFormValue('code')}
                         InputProps={{
-                            endAdornment: <img src='/verify/code' alt='验证码' />,
+                            endAdornment: <img src={codeUrl} onClick={refreshCode} alt='验证码' />,
                         }}
                     />
                     <Button

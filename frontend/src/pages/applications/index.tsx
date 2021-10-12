@@ -11,6 +11,8 @@ import { ConfirmDeleteDialog, ConfirmDeleteDialogProps } from '../../components/
 import { tap } from 'rxjs';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { CHANNEL_APP_BAR_TITLE, Portal } from '../../components/portal';
+import { useSnackbar } from 'notistack';
 
 export const Applications = () => {
     const [filter, setFilter] = useState<ArticleFilter>({ kw: '', limit: 20, offset: 0, category: 1 });
@@ -18,17 +20,28 @@ export const Applications = () => {
     const [totalSize, setTotalSize] = useState<number>(0);
     const [deleteDialog, setDeleteDialog] = useState<ConfirmDeleteDialogProps>({ open: false });
     const history = useHistory();
+    const snackBar = useSnackbar();
 
     useEffect(() => {
-        ArticleDataService.getList(filter).subscribe(({ errcode, data }) => {
-            if (errcode === 0) {
-                setDataSource(data.list);
-                setTotalSize(data.total);
-            } else {
-                // TODO: Notify user error
-            }
+        ArticleDataService.getList(filter).subscribe({
+            next: ({ errcode, data }) => {
+                if (errcode === 0) {
+                    setDataSource(data.list);
+                    setTotalSize(data.total);
+                } else {
+                    console.error('fail to fetch application list', errcode);
+                    snackBar.enqueueSnackbar(' 获取行业应用列表失败', {
+                        variant: 'error',
+                    });
+                }
+            }, error: (err) => {
+                console.error('fail to fetch application list', err);
+                snackBar.enqueueSnackbar(' 获取行业应用列表失败', {
+                    variant: 'error',
+                });
+            },
         });
-    }, [filter]);
+    }, [filter, snackBar]);
 
     function confirmDelete(item: GridRowModel) {
         setDeleteDialog({
@@ -41,8 +54,19 @@ export const Applications = () => {
                     tap(() => {
                         setFilter({ ...filter });
                         setDeleteDialog({ open: false });
+
+                        snackBar.enqueueSnackbar(' 删除行业应用成功', {
+                            variant: 'success',
+                        });
                     }),
-                ).subscribe();
+                ).subscribe({
+                    error: (err) => {
+                        console.error('fail to delete application', err);
+                        snackBar.enqueueSnackbar(' 删除行业应用失败', {
+                            variant: 'error',
+                        });
+                    },
+                });
             },
         });
     }
@@ -149,6 +173,9 @@ export const Applications = () => {
                 <AddIcon />
             </Fab>
             <ConfirmDeleteDialog {...deleteDialog} />
+            <Portal channel={CHANNEL_APP_BAR_TITLE}>
+                行业应用
+            </Portal>
         </Box>
     );
 };

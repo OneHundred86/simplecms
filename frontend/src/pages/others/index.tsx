@@ -11,6 +11,8 @@ import { ConfirmDeleteDialog, ConfirmDeleteDialogProps } from '../../components/
 import { tap } from 'rxjs';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { CHANNEL_APP_BAR_TITLE, Portal } from '../../components/portal';
+import { useSnackbar } from 'notistack';
 
 export const Others = () => {
     const [filter, setFilter] = useState<ArticleFilter>({ kw: '', limit: 20, offset: 0, category: 3 });
@@ -18,17 +20,28 @@ export const Others = () => {
     const [totalSize, setTotalSize] = useState<number>(0);
     const [deleteDialog, setDeleteDialog] = useState<ConfirmDeleteDialogProps>({ open: false });
     const history = useHistory();
+    const snackBar = useSnackbar();
 
     useEffect(() => {
-        ArticleDataService.getList(filter).subscribe(({ errcode, data }) => {
-            if (errcode === 0) {
-                setDataSource(data.list);
-                setTotalSize(data.total);
-            } else {
-                // TODO: Notify user error
-            }
+        ArticleDataService.getList(filter).subscribe({
+            next: ({ errcode, data }) => {
+                if (errcode === 0) {
+                    setDataSource(data.list);
+                    setTotalSize(data.total);
+                } else {
+                    console.error('fail to fetch others list', errcode);
+                    snackBar.enqueueSnackbar(' 获取其他列表失败', {
+                        variant: 'error',
+                    });
+                }
+            }, error: (err) => {
+                console.error('fail to fetch others list', err);
+                snackBar.enqueueSnackbar(' 获取其他列表失败', {
+                    variant: 'error',
+                });
+            },
         });
-    }, [filter]);
+    }, [filter, snackBar]);
 
     function confirmDelete(item: GridRowModel) {
         setDeleteDialog({
@@ -41,8 +54,19 @@ export const Others = () => {
                     tap(() => {
                         setFilter({ ...filter });
                         setDeleteDialog({ open: false });
+
+                        snackBar.enqueueSnackbar(' 删除其他信息成功', {
+                            variant: 'success',
+                        });
                     }),
-                ).subscribe();
+                ).subscribe({
+                    error: (err) => {
+                        console.error('fail to fetch others list', err);
+                        snackBar.enqueueSnackbar(' 删除其他信息失败', {
+                            variant: 'error',
+                        });
+                    },
+                });
             },
         });
     }
@@ -53,8 +77,13 @@ export const Others = () => {
             headerName: '稿件Id',
             sortable: false,
             renderCell: (params: GridRenderCellParams) => {
-                return (<Link href={`/admin/others/detail/${params.value}`} color='primary'
-                >{params.value}</Link>);
+                return (
+                    <Link
+                        href={`/admin/others/detail/${params.value}`}
+                        color='primary'
+                    >
+                        {params.value}
+                    </Link>);
             },
         },
         {
@@ -149,6 +178,9 @@ export const Others = () => {
                 <AddIcon />
             </Fab>
             <ConfirmDeleteDialog {...deleteDialog} />
+            <Portal channel={CHANNEL_APP_BAR_TITLE}>
+                其他
+            </Portal>
         </Box>
     );
 };
