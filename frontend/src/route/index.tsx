@@ -42,7 +42,10 @@ export const RouterConfig = () => {
     }, [history, auth]);
 
     return (
-      <Box>
+      <Box sx={{
+          height: '100vh',
+          overflowY: 'auto',
+      }}>
           <Switch>
               <Route path={"/admin/login"} exact={true}>
                   <PublicLayout>

@@ -8,13 +8,13 @@ import {
 
 class ArticleDataService {
     getList = (params: ArticleFilter) => {
-        return request<ArticleListResponse>('/admin/article/list', 'GET', {
+        return request<ArticleListResponse>(`/admin/article/list`, 'GET', {
             params
         });
     };
 
     getDetail = (id: number) => {
-        return request<ArticleDetailResponse>('/admin/article/info', 'GET', {
+        return request<ArticleDetailResponse>(`/admin/article/info`, 'GET', {
             params: {
                 id,
             },
@@ -22,18 +22,18 @@ class ArticleDataService {
     };
 
     creat = (data: ArticleCreateRequest) => {
-        return request<void>('/admin/article/add', 'POST', {
+        return request<void>(`/admin/article/add`, 'POST', {
             data,
         });
     };
     edit = (data: ArticleEditRequest) => {
-        return request<void>('/admin/article/edit', 'POST', {
+        return request<void>(`/admin/article/edit`, 'POST', {
             data,
         });
     };
 
     delete = (id: number) => {
-        return request<void>('/admin/article/del', 'POST', {
+        return request<void>(`/admin/article/del`, 'POST', {
             data: {
                 id,
             },
@@ -41,14 +41,14 @@ class ArticleDataService {
     };
 
     publish = (id: number) => {
-        return request<void>('/admin/article/publish', 'POST', {
+        return request<void>(`/admin/article/publish`, 'POST', {
             params: {
                 id,
             },
         });
     };
     withdraw = (id: number) => {
-        return request<void>('/admin/article/withdraw', 'POST', {
+        return request<void>(`/admin/article/withdraw`, 'POST', {
             params: {
                 id,
             },

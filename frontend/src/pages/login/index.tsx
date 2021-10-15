@@ -9,9 +9,9 @@ import { useSnackbar } from 'notistack';
 export const Login = () => {
     const [codeState, setCodeState] = useState(new Date().valueOf());
     const [loginForm, setLoginForm] = useState({
-        email: null,
-        password: null,
-        code: null,
+        email: '',
+        password: '',
+        code: '',
     });
     const [errorForm, setErrorForm] = useState({
         email: false,
@@ -78,7 +78,7 @@ export const Login = () => {
     }
 
     const codeUrl = useMemo(() => {
-        return `/verify/code${codeState}`;
+        return `/verify/code?state=${codeState}`;
     }, [codeState]);
 
     return (

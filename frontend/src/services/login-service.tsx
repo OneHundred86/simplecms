@@ -4,7 +4,7 @@ import { LoginResponse } from "../models";
 class LoginService {
     signIn = ({ email, password, code }) => {
 
-        return request<LoginResponse>('/admin/login', 'POST', {
+        return request<LoginResponse>(`/admin/login`, 'POST', {
             data: {
                 email,
                 password,
@@ -13,7 +13,7 @@ class LoginService {
         });
     };
     signOut = () => {
-        return request<void>('/admin/sign', 'GET');
+        return request<void>(`/admin/sign`, 'GET');
     };
 }
 
