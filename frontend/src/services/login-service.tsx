@@ -1,6 +1,5 @@
 import { request } from '../utils';
 
-// @ts-ignore
 class LoginService {
     signIn = ({ email, password, code }) => {
         return request<void>('/admin/login', 'POST', {

@@ -18,8 +18,8 @@ const StyleAppBar = styled(MuiAppBar, {
         duration: theme.transitions.duration.leavingScreen,
     }),
     ...(open && {
-        marginLeft: 240,
-        width: `calc(100% - 240px)`,
+        marginLeft: '200px',
+        // width: `calc(100% - 240px)`,
         transition: theme.transitions.create(['width', 'margin'], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,
@@ -27,10 +27,7 @@ const StyleAppBar = styled(MuiAppBar, {
     }),
 }));
 
-export const AppBar: React.FC<{ open; toggleDrawer; }> = ({
-                                                              open,
-                                                              toggleDrawer,
-                                                          }) => {
+export const AppBar: React.FC<{ open; toggleDrawer }> = ({ open, toggleDrawer }) => {
     const [title, setTitle] = useState(null);
 
     useEffect(() => {
@@ -40,8 +37,8 @@ export const AppBar: React.FC<{ open; toggleDrawer; }> = ({
 
         return () => {
             titleSubscription.unsubscribe();
-        }
-    }, [])
+        };
+    }, []);
 
     return (
         <StyleAppBar position='absolute' open={open}>
@@ -56,12 +53,11 @@ export const AppBar: React.FC<{ open; toggleDrawer; }> = ({
                     onClick={toggleDrawer}
                     sx={{
                         marginRight: '36px',
-                        ...(open && { display: 'none' }),
+                        // ...(open && { display: 'none' }),
                     }}>
                     <MenuIcon />
                 </IconButton>
-                <Typography component='h1' variant='h6' color='inherit' noWrap
-                            sx={{ flexGrow: 1 }}>
+                <Typography component='h1' variant='h6' color='inherit' noWrap sx={{ flexGrow: 1 }}>
                     {title}
                 </Typography>
             </Toolbar>
