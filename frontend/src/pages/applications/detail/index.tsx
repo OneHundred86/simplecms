@@ -13,7 +13,7 @@ export const ApplicationDetail: React.FC = (props) => {
     const [detail, setDetail] = useState<Article>(
         {
             id: 0,
-            category: 1,
+            category: 2,
             content: '',
             covers: [],
             read_cnt: 0,

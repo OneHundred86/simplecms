@@ -14,7 +14,7 @@ export const ProductDetail: React.FC = (props) => {
     const [detail, setDetail] = useState<Article>(
         {
             id: 0,
-            category: 0,
+            category: 1,
             content: '',
             covers: [],
             read_cnt: 0,

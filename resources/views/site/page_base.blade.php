@@ -83,6 +83,7 @@
 
 
                     </ul>
+{{--                EDITOR: not search in current phase
                     <form method="get" action="https://www.fsjhtc.cn/prosearch" id="search" name="searchForm">
                         <select name="sel" class="sel">
                             <option value="0">微型流量计</option>
@@ -94,7 +95,8 @@
                                autocomplete="off" value=""/>
                         <input type="submit" class="submit" value="" title="搜索"/>
                     </form>
-                    <div class="m_search_btn" onClick="search_show()"></div>
+                    <div class="m_search_btn" onClick="search_show()"></div> 
+                    --}}
                 </div>
             </div>
         </div>

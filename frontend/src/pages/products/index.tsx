@@ -15,7 +15,7 @@ import { CHANNEL_APP_BAR_TITLE, Portal } from '../../components/portal';
 import { useSnackbar } from 'notistack';
 
 export const Products: React.FC = () => {
-    const [filter, setFilter] = useState<ArticleFilter>({ kw: '', limit: 20, offset: 0, category: 0 });
+    const [filter, setFilter] = useState<ArticleFilter>({ kw: '', limit: 20, offset: 0, category: 1 });
     const [dataSource, setDataSource] = useState<Article[]>([]);
     const [totalSize, setTotalSize] = useState<number>(1);
     const [deleteDialog, setDeleteDialog] = useState<ConfirmDeleteDialogProps>({ open: false });

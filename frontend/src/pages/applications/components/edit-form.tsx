@@ -38,7 +38,7 @@ export const EditForm: React.FC<{ detail: Article }> = ({
     useEffect(() => {
         const saveAction = ActionService.handleAction('save').pipe(switchMap(() => {
             return !formDetail.id ? ArticleDataService.creat({
-                category: 1,
+                category: 2,
                 content: formDetail.content,
                 summary: formDetail.summary,
                 title: formDetail.title,
