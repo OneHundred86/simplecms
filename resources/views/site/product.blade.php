@@ -65,19 +65,6 @@
                             <dt><span>分类</span><i class="fa fa-angle-down"></i></dt>
                             <dd id="root_type">
                                 <a class='active' href="#">全部</a>
-                                <a href="#">广州仪器仪表</a>
-                                <a href="#">椭圆齿轮流量计</a>
-                                <a href="#">浮球液位开关</a>
-                                <a href="#">涡街流量计</a>
-                                <a href="#">压力变送器</a>
-                                <a href="#">电磁流量计</a>
-                                <a href="#">微型流量计</a>
-                                <a href="#">金属管浮子流量计</a>
-                                <a href="#">超声波流量计</a>
-                                <a href="#">涡轮流量计</a>
-                                <a href="#">温度湿度变送器</a>
-                                <a href="#">液体流量计</a>
-                                <a href="#">气体涡轮流量计</a>
                             </dd>
                         </dl>
                     </li>
@@ -94,215 +81,14 @@
 
 
                 <ul class="pro">
-                    <li>
-                        <a href="prod_nay.html">
-                            <div class="pro_pic">
-                                <img class="show" src=" images/proud.jpg" alt="CTB909021-W 女皇白" />
-                                <!-- <img class="fade" src="https://194.zhunducdn.com/fsjhtccn/public/upload/20210809/263ee28800c7d72137898d14e2731656.jpg" alt="CTB909021-W 女皇白" />-->
-                            </div>
-                        </a>
-                        <div class="pro_words">
-                            <div class="pro_bg">
-                                <h5><a href="prod_nay.html">DFL-P投入式静压式液位计变送器</a></h5>
-                                <!--<p>CTB909021-W</p>
-                                                                            <em class="pub_link" onclick="showQuery('501-CTB909021-W 女皇白')">询价</em> -->
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="prod_nay.html">
-                            <div class="pro_pic">
-                                <img class="show" src=" images/proud02.jpg" alt="CTB909021-W 女皇白" />
-                                <!-- <img class="fade" src="https://194.zhunducdn.com/fsjhtccn/public/upload/20210809/263ee28800c7d72137898d14e2731656.jpg" alt="CTB909021-W 女皇白" />-->
-                            </div>
-                        </a>
-                        <div class="pro_words">
-                            <div class="pro_bg">
-                                <h5><a href="prod_nay.html">DFL-P投入式静压式液位计变送器</a></h5>
-                                <!--<p>CTB909021-W</p>
-                                                                            <em class="pub_link" onclick="showQuery('501-CTB909021-W 女皇白')">询价</em> -->
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="prod_nay.html">
-                            <div class="pro_pic">
-                                <img class="show" src=" images/proud.jpg" alt="CTB909021-W 女皇白" />
-                                <!-- <img class="fade" src="https://194.zhunducdn.com/fsjhtccn/public/upload/20210809/263ee28800c7d72137898d14e2731656.jpg" alt="CTB909021-W 女皇白" />-->
-                            </div>
-                        </a>
-                        <div class="pro_words">
-                            <div class="pro_bg">
-                                <h5><a href="prod_nay.html">DFL-P投入式静压式液位计变送器</a></h5>
-                                <!--<p>CTB909021-W</p>
-                                                                            <em class="pub_link" onclick="showQuery('501-CTB909021-W 女皇白')">询价</em> -->
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="prod_nay.html">
-                            <div class="pro_pic">
-                                <img class="show" src=" images/proud02.jpg" alt="CTB909021-W 女皇白" />
-                                <!-- <img class="fade" src="https://194.zhunducdn.com/fsjhtccn/public/upload/20210809/263ee28800c7d72137898d14e2731656.jpg" alt="CTB909021-W 女皇白" />-->
-                            </div>
-                        </a>
-                        <div class="pro_words">
-                            <div class="pro_bg">
-                                <h5><a href="prod_nay.html">DFL-P投入式静压式液位计变送器</a></h5>
-                                <!--<p>CTB909021-W</p>
-                                                                            <em class="pub_link" onclick="showQuery('501-CTB909021-W 女皇白')">询价</em> -->
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="prod_nay.html">
-                            <div class="pro_pic">
-                                <img class="show" src=" images/proud02.jpg" alt="CTB909021-W 女皇白" />
-                                <!-- <img class="fade" src="https://194.zhunducdn.com/fsjhtccn/public/upload/20210809/263ee28800c7d72137898d14e2731656.jpg" alt="CTB909021-W 女皇白" />-->
-                            </div>
-                        </a>
-                        <div class="pro_words">
-                            <div class="pro_bg">
-                                <h5><a href="prod_nay.html">DFL-P投入式静压式液位计变送器</a></h5>
-                                <!--<p>CTB909021-W</p>
-                                                                            <em class="pub_link" onclick="showQuery('501-CTB909021-W 女皇白')">询价</em> -->
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="prod_nay.html">
-                            <div class="pro_pic">
-                                <img class="show" src=" images/proud.jpg" alt="CTB909021-W 女皇白" />
-                                <!-- <img class="fade" src="https://194.zhunducdn.com/fsjhtccn/public/upload/20210809/263ee28800c7d72137898d14e2731656.jpg" alt="CTB909021-W 女皇白" />-->
-                            </div>
-                        </a>
-                        <div class="pro_words">
-                            <div class="pro_bg">
-                                <h5><a href="prod_nay.html">DFL-P投入式静压式液位计变送器</a></h5>
-                                <!--<p>CTB909021-W</p>
-                                                                            <em class="pub_link" onclick="showQuery('501-CTB909021-W 女皇白')">询价</em> -->
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="prod_nay.html">
-                            <div class="pro_pic">
-                                <img class="show" src=" images/proud02.jpg" alt="CTB909021-W 女皇白" />
-                                <!-- <img class="fade" src="https://194.zhunducdn.com/fsjhtccn/public/upload/20210809/263ee28800c7d72137898d14e2731656.jpg" alt="CTB909021-W 女皇白" />-->
-                            </div>
-                        </a>
-                        <div class="pro_words">
-                            <div class="pro_bg">
-                                <h5><a href="prod_nay.html">DFL-P投入式静压式液位计变送器</a></h5>
-                                <!--<p>CTB909021-W</p>
-                                                                            <em class="pub_link" onclick="showQuery('501-CTB909021-W 女皇白')">询价</em> -->
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="prod_nay.html">
-                            <div class="pro_pic">
-                                <img class="show" src=" images/proud.jpg" alt="CTB909021-W 女皇白" />
-                                <!-- <img class="fade" src="https://194.zhunducdn.com/fsjhtccn/public/upload/20210809/263ee28800c7d72137898d14e2731656.jpg" alt="CTB909021-W 女皇白" />-->
-                            </div>
-                        </a>
-                        <div class="pro_words">
-                            <div class="pro_bg">
-                                <h5><a href="prod_nay.html">DFL-P投入式静压式液位计变送器</a></h5>
-                                <!--<p>CTB909021-W</p>
-                                                                            <em class="pub_link" onclick="showQuery('501-CTB909021-W 女皇白')">询价</em> -->
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="prod_nay.html">
-                            <div class="pro_pic">
-                                <img class="show" src=" images/proud.jpg" alt="CTB909021-W 女皇白" />
-                                <!-- <img class="fade" src="https://194.zhunducdn.com/fsjhtccn/public/upload/20210809/263ee28800c7d72137898d14e2731656.jpg" alt="CTB909021-W 女皇白" />-->
-                            </div>
-                        </a>
-                        <div class="pro_words">
-                            <div class="pro_bg">
-                                <h5><a href="prod_nay.html">DFL-P投入式静压式液位计变送器</a></h5>
-                                <!--<p>CTB909021-W</p>
-                                                                            <em class="pub_link" onclick="showQuery('501-CTB909021-W 女皇白')">询价</em> -->
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="prod_nay.html">
-                            <div class="pro_pic">
-                                <img class="show" src=" images/proud02.jpg" alt="CTB909021-W 女皇白" />
-                                <!-- <img class="fade" src="https://194.zhunducdn.com/fsjhtccn/public/upload/20210809/263ee28800c7d72137898d14e2731656.jpg" alt="CTB909021-W 女皇白" />-->
-                            </div>
-                        </a>
-                        <div class="pro_words">
-                            <div class="pro_bg">
-                                <h5><a href="prod_nay.html">DFL-P投入式静压式液位计变送器</a></h5>
-                                <!--<p>CTB909021-W</p>
-                                                                            <em class="pub_link" onclick="showQuery('501-CTB909021-W 女皇白')">询价</em> -->
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="prod_nay.html">
-                            <div class="pro_pic">
-                                <img class="show" src=" images/proud.jpg" alt="CTB909021-W 女皇白" />
-                                <!-- <img class="fade" src="https://194.zhunducdn.com/fsjhtccn/public/upload/20210809/263ee28800c7d72137898d14e2731656.jpg" alt="CTB909021-W 女皇白" />-->
-                            </div>
-                        </a>
-                        <div class="pro_words">
-                            <div class="pro_bg">
-                                <h5><a href="prod_nay.html">DFL-P投入式静压式液位计变送器</a></h5>
-                                <!--<p>CTB909021-W</p>
-                                                                            <em class="pub_link" onclick="showQuery('501-CTB909021-W 女皇白')">询价</em> -->
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="prod_nay.html">
-                            <div class="pro_pic">
-                                <img class="show" src=" images/proud02.jpg" alt="CTB909021-W 女皇白" />
-                                <!-- <img class="fade" src="https://194.zhunducdn.com/fsjhtccn/public/upload/20210809/263ee28800c7d72137898d14e2731656.jpg" alt="CTB909021-W 女皇白" />-->
-                            </div>
-                        </a>
-                        <div class="pro_words">
-                            <div class="pro_bg">
-                                <h5><a href="prod_nay.html">DFL-P投入式静压式液位计变送器</a></h5>
-                                <!--<p>CTB909021-W</p>
-                                                                            <em class="pub_link" onclick="showQuery('501-CTB909021-W 女皇白')">询价</em> -->
-                            </div>
-                        </div>
-                    </li>
                 </ul>
                 <div class="fenye">
-                    <ul>
-                        <li class="fenye-p"><a onclick='return false' href="#"><i class="fa fa-angle-left"></i></a>
-                        </li>
-                        <li class='active'><a onclick='return false' href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><span>···</span></li>
-                        <li><a href="#">9</a></li>
-                        <li class="fenye-n"><a href="#"><i class="fa fa-angle-right"></i></a></li>
-                    </ul>
-                    <select class=""
-                        onchange='javascript:location.href=this.options[this.selectedIndex].value'>
-                        <option value="#" selected>1</option>
-                        <option value="#">2</option>
-                        <option value="#">3</option>
-                        <option value="#">4</option>
-                        <option value="#">5</option>
-                        <option value="#">6</option>
-                        <option value="#">7</option>
-                        <option value="#">8</option>
-                        <option value="#">9</option>
+                    <ul> </ul>
+                    <select class="">
                     </select>
                 </div>
                 <ul class="pro_hid">
-                    
+
                 </ul>
                 <ul class="m_pro">
                     数据加载中，请稍后...
@@ -370,32 +156,100 @@
                         category: 1,
                         type_id: undefined,
                     }
+
                     function fetchProductList() {
-                        $.ajax({
+                        return $.ajax({
                             url: '/article/list',
                             data: fetchData,
                             method: 'POST',
                             contentType: 'application/json',
-                            dataType: 'JSON',
-                            success: function(resp) {
-                                if (resp.data) {
-                                    articleList = resp.data.list,
-                                    const articleElementList = articleList.map(function(article) {
-                                        return '<a href="/product/'+ article.id +'"><div class="pro_pic"><img realSrc="' + article.covers[0].url +'" alt="' + article.title + '" /></div> <div class="pro_words"><h5></h5> </div> </a>'
+                            dataType: 'JSON'
+                        }).done(function(resp) {
+                            if (resp.errcode === 0) {
+                                articleList = resp.data.list,
+                                    var articleHidElementList = articleList.map(function(article) {
+                                        return '<li><a href="pro_nay.html?id=' + article.id +
+                                            '"><div class="pro_pic"><img realSrc="' + article.covers[0].url +
+                                            '" alt="' + article.title +
+                                            '" /></div> <div class="pro_words"><h5></h5> </div> </a></li>'
                                     })
 
-                                    $('.pro_hid').append(articleElementList)
+                                $('.pro_hid').append(articleHidElementList)
 
-                                }
+                                articleElementList = articleList.map(function(article) {
+                                    return '<li>' +
+                                        '<a href="prod_nay.html"><div class="pro_pic"><img class="show" src="' +
+                                        article.covers[0] + '" alt="' + article.title + '" /></div>' +
+                                        '<div class="pro_words"><div class="pro_bg"><h5><a href="pro_nay.html?id="' +
+                                        article.id + '>' + article.title + '</a></h5> </div> </div>' +
+                                        '</li>'
+                                });
 
+                                $('.pro').empty();
+                                $('.pro').append(articleElementList)
+                                var pages = resp.data.total / 20;
+                                loadPagignations(pages);
                             }
                         })
+                    }
+
+                    function loadPagignations(pageSize) {
+                        var paginationList = ['<li data-offset="' + offset - 1 +
+                            '" class="fenye-p"><a href="#"><i class="fa fa-angle-left"></i></a></li>'
+                        ];
+
+                        if (offset > 5) {
+                            paginationList.push('<li><span>···</span></li>');
+                        }
+                        if (offset < 5) {
+                            for (var index = 1; index <= pageSize; index++) {
+                                paginationList.push('<li data-offset="' + index - 1 + '"><a href="#">' + index + '</a></li>');
+                                if (index >= 5) {
+                                    paginationList.push('<li><span>···</span></li>');
+                                    paginationList.push('<li data-offset="' + pageSize - 1 + '"><a href="#">' + pageSize + '</a></li>');
+                                }
+                            }
+                        } else if (offset >= pageSize - 4) {
+                            for (var index = offset - 1; index <= pageSize; index++) {
+                                paginationList.push('<li data-offset="' + index - 1 + '" ><a href="#">' + index + '</a></li>');
+                            }
+                        } else {
+                            for (var index = offset - 1; index <= offset + 3; index++) {
+                                paginationList.push('<li data-offset="' + index - 1 + '"><a href="#">' + index + '</a></li>');
+                            }
+                            paginationList.push('<li><span>···</span></li>');
+                            paginationList.push('<li data-offset="' + pageSize - 1 + '"><a href="#">' + pageSize + '</a></li>');
+                        }
+                        paginationList.push('<li data-offset="' + offset + 1 +
+                            '" class="fenye-n"><a href="#"><i class="fa fa-angle-right"></i></a></li>')
+
+                        $('.fenye ul').append(paginationList.join(''));
+
+                        var paginationSelect = [];
+                        for (var i = 1; i <= pageSize; i++) {
+                            paginationSelect.push('<option value="' + i - 1 + '">' + i + '</option>')
+                        }
+                        $('.fenye select').append(paginationSelect.join(''));
+
+                        $('.fenye ul li[data-offset]="' + offset + '"').addClass('active');
+                        $('.fenye ul li').on('click', function(e) {
+                            var ele = e.target;
+                            if (ele) {
+                                var offset = ele.data['offset'];
+                                if (offset >= 0) {
+                                    fetchData.offset = offset;
+                                    fetchProductList();
+                                }
+                            }
+                        });
+
+                        $('.fenye select').value = offset;
                     }
 
                     var _content = []; //临时存储li循环内容
                     var loading = {
                         _default: 6, //默认显示图片个数
-                        _loading: 6, //每次点击按钮后加载的个数
+                        _loading: 20, //每次点击按钮后加载的个数
                         init: function() {
                             var lis = $(".pro_hid li");
                             $(".m_pro").html("");
@@ -412,17 +266,20 @@
                         },
                         loadMore: function() {
                             var mLis = $(".m_pro li").length;
-                            for (var i = 0; i < loading._loading; i++) {
-                                var target = _content.shift();
-                                if (!target) {
-                                    $('.loading_bnt span').html("全部加载完毕");
-                                    break;
+                            fetchData.offset = fetchData.offset + 1;
+                            fetchProductList().done(function() {
+                                for (var i = 0; i < loading._loading; i++) {
+                                    var target = _content.shift();
+                                    if (!target) {
+                                        $('.loading_bnt span').html("全部加载完毕");
+                                        break;
+                                    }
+                                    $(".m_pro").append(target);
+                                    $(".m_pro img").eq(mLis + i).each(function() {
+                                        $(this).attr('src', $(this).attr('realSrc'));
+                                    });
                                 }
-                                $(".m_pro").append(target);
-                                $(".m_pro img").eq(mLis + i).each(function() {
-                                    $(this).attr('src', $(this).attr('realSrc'));
-                                });
-                            }
+                            });
                         }
                     }
                     loading.init();
