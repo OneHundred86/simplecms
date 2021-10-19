@@ -1,6 +1,6 @@
 @extends('site.page_base')
 <script>
-    _ARTICLE = @json($article);
+    _CAT = {{ $category }};
 </script>
 @section('banner')
     <div class="banner_box layout2">
