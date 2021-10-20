@@ -4,34 +4,45 @@
 namespace App\Http\Controllers;
 
 use App\Lib\Twig\Render;
+use App\Model\Article;
 use App\Model\Category;
 use Illuminate\Http\Request;
 
 class SitePageController
 {
-    public function __construct(Render $render)
-    {
-        $this->render = $render;
-    }
-
-    public function route(Request $request, $path)
-    {
-        return __METHOD__ . $path;
-    }
-
     public function category(Request $request, $id)
     {
-        $category = Category::find($id);
-        if(!$category){
-            abort(404);
+        $category = $id;
+        if(!in_array($category, [Article::CATEGORY_PRODUCT, Article::CATEGORY_APP, Article::CATEGORY_NEWS])){
+            abort(404, "栏目不存在");
         }
 
-        return $this->render->renderByCategory($category);
+        return view('site/category', [
+            'category' => $category,
+        ]);
     }
 
-    public function article()
+    public function article(Request $request, $id)
     {
-        return view('site/article');
+        $article = Article::find($id);
+        if(!$article){
+            abort(404, "稿件不存在");
+        }elseif($article->status != Article::STATUS_PUB){
+            abort(403);
+        }
+
+        $article->load('type')->load('covers');
+
+        return view('site/article', [
+            'article' => $article,
+        ]);
+    }
+
+
+    //
+    public function article_html()
+    {
+        return view('site/article_html');
     }
 
     public function about()

@@ -44,7 +44,7 @@ Route::group(
         Route::get('index.html', 'SitePageController@index');
         Route::get('about.html', 'SitePageController@about');
         Route::get('product.html', 'SitePageController@product');
-        Route::get('article.html', 'SitePageController@article');
+        Route::get('article.html', 'SitePageController@article_html');
         Route::get('contact.html', 'SitePageController@contact');
         Route::get('news.html', 'SitePageController@news');
         Route::get('prod_nay.html', 'SitePageController@prod_nay');
@@ -52,7 +52,5 @@ Route::group(
 
         Route::get('category/{id}', 'SitePageController@category')->where('id', '\d+');
         Route::get('article/{id}', 'SitePageController@article')->where('id', '\d+');
-        // 该路由一定要放在最下面
-        Route::any('{path}', 'SitePageController@route')->where('path', '.*');
     }
 );
