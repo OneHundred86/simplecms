@@ -1,8 +1,10 @@
-### freya2纯服务端
+### 服务端
 
 #### 部署
 
-假设域名为：test.com，代码部署在/var/www/test/；
+假设代码部署在/Users/admin/Code/html/simplecms；
+后台域名：my.simplecms:8080
+前台域名：
 
 ###### 1.配置.env
 
@@ -32,45 +34,127 @@ chown -R www:www storage
 b、修改nginx和php-fpm执行用户为www
 
 ###### 3.nginx
+```
+server {
+    listen       8080;
+    server_name  my.simplecms;
 
-    server {
-        listen       80;
-        server_name  test.com;charset utf8;
-    
-        #access_log  logs/host.access.log  main;
-    
-        index index.html index.htm index.php;
-    
-        root /var/www/test/public;
-    
-        location / {
-            try_files $uri $uri/ /index.php?$query_string;
-        }
-    
-        location = /favicon.ico { access_log off; log_not_found off; }
-        location = /robots.txt  { access_log off; log_not_found off; }
-    
-        access_log /var/log/nginx/test-access.log;
-        error_log  /var/log/nginx/test-error.log error;
-    
-        sendfile off;
-    
-        client_max_body_size 100m;
-        client_body_timeout  300;
-    
-        location ~ \.php$ {
-            fastcgi_pass   unix:/run/php/php7.2-fpm.sock;
-            fastcgi_index  index.php;
-            fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
-            #include        fastcgi_params;
-            include        fastcgi.conf;
-        }
-    
-        # deny access to .htaccess files, if Apache's document root
-        location ~ /\.git {
-            deny  all;
-        }
+    charset utf8;
+
+    access_log  /Users/admin/Logs/nginx/my.simplecms.access.log;
+    error_log   /Users/admin/Logs/nginx/my.simplecms.error.log debug;
+
+    index index.html;
+
+    root /Users/admin/Code/html/simplecms/public;
+
+    client_max_body_size 100M;
+    client_body_timeout 300;
+
+    location / {
+        try_files $uri $uri/ @web;
     }
+
+    location @web {
+        proxy_set_header Host my.simplecms-php:8080;
+        proxy_pass http://127.0.0.1:8080;
+    }
+
+    # 隐藏文件不可访问
+    location ~ /\..* {
+        deny all;
+    }
+
+    # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+    location ~ \.php$ {
+        fastcgi_pass   127.0.0.1:9000;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
+        include        fastcgi.conf;
+
+        #include servers/ips.conf;
+    }
+}
+
+server {
+    listen       8080;
+    server_name  my.simplecms-php;
+
+    charset utf8;
+
+    access_log  /Users/admin/Logs/nginx/my.simplecms-php.access.log;
+
+    index index.php;
+
+    root /Users/admin/Code/html/simplecms/public;
+
+    client_max_body_size 100M;
+    client_body_timeout 300;
+
+    
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+    location ~ \.php$ {
+        fastcgi_pass   127.0.0.1:9000;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
+        include        fastcgi.conf;
+
+        #include servers/ips.conf;
+    }
+}
+
+
+server {
+    listen       80;
+    server_name  my.scsite;
+
+    charset utf8;
+
+    access_log  /Users/admin/Logs/nginx/my.scsite.access.log;
+
+    index index.html index.htm index.php;
+
+    root /Users/admin/Code/html/simplecms/storage/app/public;
+
+    
+    location / {
+        try_files $uri $uri/ @web;
+    }
+
+    location = / {
+        rewrite ^/(.*)$ /sitepage/index.html break;
+        proxy_http_version 1.1;
+        proxy_set_header Connection "keep-alive";
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header Host my.simplecms-php:8080;
+        proxy_pass http://127.0.0.1:8080;
+    }
+
+    location @web {
+        rewrite ^/(.*)$ /sitepage/$1 break;
+        proxy_http_version 1.1;
+        proxy_set_header Connection "keep-alive";
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header Host my.simplecms-php:8080;
+        proxy_pass http://127.0.0.1:8080;
+    }
+
+    # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+    location ~ \.php$ {
+        fastcgi_pass   127.0.0.1:9000;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
+        include        fastcgi.conf;
+
+        #include servers/ips.conf;
+    }
+}
+
+```
 ###### 4.限制文件上传大小(可选)
 
 编辑php.ini
