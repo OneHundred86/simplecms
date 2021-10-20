@@ -2,14 +2,16 @@ import { request } from '../utils';
 import {
     ArticleCreateRequest,
     ArticleDetailResponse,
-    ArticleEditRequest, ArticleFilter,
+    ArticleEditRequest,
+    ArticleFilter,
     ArticleListResponse,
+    VoidResponse,
 } from '../models';
 
 class ArticleDataService {
     getList = (params: ArticleFilter) => {
         return request<ArticleListResponse>(`/admin/article/list`, 'GET', {
-            params
+            params,
         });
     };
 
@@ -21,13 +23,14 @@ class ArticleDataService {
         });
     };
 
-    creat = (data: ArticleCreateRequest) => {
-        return request<void>(`/admin/article/add`, 'POST', {
+    create = (data: ArticleCreateRequest) => {
+
+        return request<VoidResponse>(`/admin/article/add`, 'POST', {
             data,
         });
     };
     edit = (data: ArticleEditRequest) => {
-        return request<void>(`/admin/article/edit`, 'POST', {
+        return request<VoidResponse>(`/admin/article/edit`, 'POST', {
             data,
         });
     };

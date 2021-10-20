@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { DataGrid, GridColDef, GridRenderCellParams, GridRowModel } from '@mui/x-data-grid';
 import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import { ArticleDataService } from '../../services';
 import { Article, ArticleFilter } from '../../models';
-import { Box, Fab, IconButton, Link } from '@mui/material';
+import { Box, Fab, IconButton, Typography } from '@mui/material';
 import { QuickFilterToolbar } from '../../components/table';
 import AddIcon from '@mui/icons-material/Add';
 import { ConfirmDeleteDialog, ConfirmDeleteDialogProps } from '../../components/dialog/confirm-delete-dialog';
@@ -77,8 +78,7 @@ export const Applications = () => {
             headerName: '稿件Id',
             sortable: false,
             renderCell: (params: GridRenderCellParams) => {
-                return (<Link href={`/admin/applications/detail/${params.value}`} color='primary'
-                >{params.value}</Link>);
+                return (<Link to={`/admin/applications/detail/${params.value}`}>{params.value}</Link>);
             },
         },
         {
@@ -90,11 +90,13 @@ export const Applications = () => {
             field: 'type_id',
             headerName: '类型',
             sortable: false,
+            renderCell: (params) => <Typography>{params.row.type?.name ?? ''}</Typography>,
         },
         {
             field: 'status',
             headerName: '状态',
             sortable: false,
+            renderCell: (params) => <Typography>{params.value === 0 ? '草稿' : '已发布'}</Typography>,
         },
         {
             field: 'read_cnt',
@@ -113,7 +115,7 @@ export const Applications = () => {
             renderCell: (params: GridRenderCellParams) => {
                 return (
                     <>
-                        <IconButton component={Link} href={`/admin/applications/detail/${params.row.id}`}>
+                        <IconButton component={Link} to={`/admin/applications/detail/${params.row.id}`}>
                             <EditIcon />
                         </IconButton>
                         <IconButton onClick={() => confirmDelete(params.row)}>

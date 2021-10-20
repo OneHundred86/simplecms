@@ -20,7 +20,6 @@ export const NewsDetail: React.FC = (props) => {
             status: 0,
             summary: '',
             title: '',
-            type: [],
             type_id: -1,
             created_at: '',
             updated_at: '',

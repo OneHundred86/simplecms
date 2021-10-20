@@ -43,7 +43,7 @@ export const ActionMenu: React.FC<{ status: number, isCreate: boolean }> = ({ st
             onClick={handleOpen}
             endIcon={<KeyboardArrowDownIcon />}
         >
-            {status === 0 ? '草稿' : '已发布'}
+            {isCreate ? '新增' : status === 0 ? '草稿' : '已发布'}
         </Button>
         <Menu
             id='action-menu'
@@ -71,20 +71,18 @@ export const ActionMenu: React.FC<{ status: number, isCreate: boolean }> = ({ st
                     <MenuItem key='edit' onClick={handleSave}>
                         保存
                     </MenuItem>
-                    : (
-                        <>
-                            <MenuItem key='edit' onClick={handleSave}>
-                                保存
-                            </MenuItem>
-                            <MenuItem key='publish' onClick={handlePublish}>
-                                发布
-                            </MenuItem>
-                            <MenuItem key='withdraw' onClick={handleWithdraw}>
-                                撤稿
-                            </MenuItem>
-                        </>
-                    )
+                    : [
+                        <MenuItem key='edit' onClick={handleSave}>
+                            保存
+                        </MenuItem>,
+                        <MenuItem key='publish' onClick={handlePublish}>
+                            发布
+                        </MenuItem>,
+                        <MenuItem key='withdraw' onClick={handleWithdraw}>
+                            撤稿
+                        </MenuItem>,
+                    ]
             }
         </Menu>
     </div>;
-};
+}

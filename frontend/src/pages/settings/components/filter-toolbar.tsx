@@ -4,10 +4,9 @@ import ClearIcon from '@mui/icons-material/Clear';
 import React from 'react';
 
 export const categoryList = {
-    0: '产品类型',
-    1: '应用类型',
-    2: '新闻类型',
-    3: '其他类型',
+    1: '产品类型',
+    2: '应用类型',
+    3: '新闻类型',
 };
 
 export const FilterToolbar: React.FC<{ filter, setFilter }> = ({ filter, setFilter }) => {

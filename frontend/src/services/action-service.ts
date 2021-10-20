@@ -1,7 +1,7 @@
-import { BehaviorSubject, filter, Observable } from 'rxjs';
+import { filter, Observable, Subject } from 'rxjs';
 
 class ActionService {
-    private actionSubject = new BehaviorSubject<string>(null);
+    private actionSubject = new Subject<string>();
 
     save = (): void => {
         this.actionSubject.next('save');

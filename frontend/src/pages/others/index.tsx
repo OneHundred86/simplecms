@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { DataGrid, GridColDef, GridRenderCellParams, GridRowModel } from '@mui/x-data-grid';
 import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
+import { Box, Fab, IconButton, Typography } from '@mui/material';
 
 import { ArticleDataService } from '../../services';
 import { Article, ArticleFilter } from '../../models';
-import { Box, Fab, IconButton, Link } from '@mui/material';
 import { QuickFilterToolbar } from '../../components/table';
 import AddIcon from '@mui/icons-material/Add';
 import { ConfirmDeleteDialog, ConfirmDeleteDialogProps } from '../../components/dialog/confirm-delete-dialog';
@@ -34,7 +35,8 @@ export const Others = () => {
                         variant: 'error',
                     });
                 }
-            }, error: (err) => {
+            },
+            error: (err) => {
                 console.error('fail to fetch others list', err);
                 snackBar.enqueueSnackbar(' 获取其他列表失败', {
                     variant: 'error',
@@ -45,28 +47,31 @@ export const Others = () => {
 
     function confirmDelete(item: GridRowModel) {
         setDeleteDialog({
-            open: true, message: `确认删除其他信息: "${item.title}"?`,
+            open: true,
+            message: `确认删除其他信息: "${item.title}"?`,
             onClose(): void {
                 setDeleteDialog({ open: false });
             },
             onConfirm(): void {
-                ArticleDataService.delete(item.id).pipe(
-                    tap(() => {
-                        setFilter({ ...filter });
-                        setDeleteDialog({ open: false });
+                ArticleDataService.delete(item.id)
+                    .pipe(
+                        tap(() => {
+                            setFilter({ ...filter });
+                            setDeleteDialog({ open: false });
 
-                        snackBar.enqueueSnackbar(' 删除其他信息成功', {
-                            variant: 'success',
-                        });
-                    }),
-                ).subscribe({
-                    error: (err) => {
-                        console.error('fail to fetch others list', err);
-                        snackBar.enqueueSnackbar(' 删除其他信息失败', {
-                            variant: 'error',
-                        });
-                    },
-                });
+                            snackBar.enqueueSnackbar(' 删除其他信息成功', {
+                                variant: 'success',
+                            });
+                        })
+                    )
+                    .subscribe({
+                        error: (err) => {
+                            console.error('fail to fetch others list', err);
+                            snackBar.enqueueSnackbar(' 删除其他信息失败', {
+                                variant: 'error',
+                            });
+                        },
+                    });
             },
         });
     }
@@ -78,12 +83,10 @@ export const Others = () => {
             sortable: false,
             renderCell: (params: GridRenderCellParams) => {
                 return (
-                    <Link
-                        href={`/admin/others/detail/${params.value}`}
-                        color='primary'
-                    >
+                    <Link to={`/admin/others/detail/${params.value}`} color='primary'>
                         {params.value}
-                    </Link>);
+                    </Link>
+                );
             },
         },
         {
@@ -95,11 +98,13 @@ export const Others = () => {
             field: 'type_id',
             headerName: '类型',
             sortable: false,
+            renderCell: (params) => <Typography>{params.row.type?.name ?? ''}</Typography>,
         },
         {
             field: 'status',
             headerName: '状态',
             sortable: false,
+            renderCell: (params) => <Typography>{params.value === 0 ? '草稿' : '已发布'}</Typography>,
         },
         {
             field: 'read_cnt',
@@ -118,7 +123,7 @@ export const Others = () => {
             renderCell: (params: GridRenderCellParams) => {
                 return (
                     <>
-                        <IconButton component={Link} href={`/admin/others/detail/${params.row.id}`}>
+                        <IconButton component={Link} to={`/admin/others/detail/${params.row.id}`}>
                             <EditIcon />
                         </IconButton>
                         <IconButton onClick={() => confirmDelete(params.row)}>
@@ -142,7 +147,8 @@ export const Others = () => {
         history.push('/admin/others/create');
     }
 
-    return (<Box sx={{ height: '100%', width: '100%', p: 1 }}>
+    return (
+        <Box sx={{ height: '100%', width: '100%', p: 1 }}>
             <DataGrid
                 autoHeight
                 disableColumnMenu={true}
@@ -173,14 +179,11 @@ export const Others = () => {
                 size='medium'
                 color='primary'
                 aria-label='add'
-                onClick={createItem}
-            >
+                onClick={createItem}>
                 <AddIcon />
             </Fab>
             <ConfirmDeleteDialog {...deleteDialog} />
-            <Portal channel={CHANNEL_APP_BAR_TITLE}>
-                其他
-            </Portal>
+            <Portal channel={CHANNEL_APP_BAR_TITLE}>其他</Portal>
         </Box>
     );
 };

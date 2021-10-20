@@ -34,8 +34,9 @@ export const Login = () => {
             });
             LoginService.signIn(loginForm).subscribe({
                 next: (resp) => {
-                    if (resp.errcode === 200) {
+                    if (resp.errcode === 0) {
                         history.push('/');
+                        window.location.reload();
                     } else {
                         setErrorForm({
                             ...errorForm,

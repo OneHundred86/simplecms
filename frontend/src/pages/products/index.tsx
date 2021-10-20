@@ -3,7 +3,7 @@ import { DataGrid, GridColDef, GridRenderCellParams, GridRowModel } from '@mui/x
 
 import { ArticleDataService } from '../../services';
 import { Article, ArticleFilter } from '../../models';
-import { Box, Fab, IconButton, Link } from '@mui/material';
+import { Box, Fab, IconButton, Typography } from '@mui/material';
 import { QuickFilterToolbar } from '../../components/table';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
@@ -13,6 +13,7 @@ import { tap } from 'rxjs';
 import { ConfirmDeleteDialog, ConfirmDeleteDialogProps } from '../../components/dialog/confirm-delete-dialog';
 import { CHANNEL_APP_BAR_TITLE, Portal } from '../../components/portal';
 import { useSnackbar } from 'notistack';
+import { Link } from 'react-router-dom';
 
 export const Products: React.FC = () => {
     const [filter, setFilter] = useState<ArticleFilter>({ kw: '', limit: 20, offset: 0, category: 1 });
@@ -24,21 +25,23 @@ export const Products: React.FC = () => {
     const snackBar = useSnackbar();
 
     useEffect(() => {
-        ArticleDataService.getList(filter).subscribe(({ errcode, data }) => {
-            if (errcode === 0) {
-                setDataSource(data.list);
-                setTotalSize(data.total);
-            } else {
-                console.error('fetch products error', errcode);
+        ArticleDataService.getList(filter).subscribe({
+            next: ({ errcode, data }) => {
+                if (errcode === 0) {
+                    setDataSource(data.list);
+                    setTotalSize(data.total);
+                } else {
+                    console.error('fetch products error', errcode);
+                    snackBar.enqueueSnackbar('获取产品列表失败', {
+                        variant: 'error',
+                    });
+                }
+            }, error: (err) => {
+                console.error('fetch products error', err);
                 snackBar.enqueueSnackbar('获取产品列表失败', {
                     variant: 'error',
                 });
-            }
-        }, (err) => {
-            console.error('fetch products error', err);
-            snackBar.enqueueSnackbar('获取产品列表失败', {
-                variant: 'error',
-            });
+            },
         });
     }, [filter, snackBar]);
 
@@ -75,10 +78,8 @@ export const Products: React.FC = () => {
             field: 'id',
             headerName: '稿件Id',
             sortable: false,
-            renderCell: (params: GridRenderCellParams) => {
-                return (<Link href={`/admin/products/detail/${params.value}`} color='primary'
-                >{params.value}</Link>);
-            },
+            renderCell: (params: GridRenderCellParams) => (
+                <Link to={`/admin/products/detail/${params.value}`}>{params.value}</Link>),
         },
         {
             field: 'title',
@@ -89,11 +90,17 @@ export const Products: React.FC = () => {
             field: 'type_id',
             headerName: '类型',
             sortable: false,
+            renderCell: (params) => (
+                <Typography>{params.row.type?.name ?? ''}</Typography>
+            ),
         },
         {
             field: 'status',
             headerName: '状态',
             sortable: false,
+            renderCell: (params) => (
+                <Typography>{params.value === 0 ? '草稿' : '已发布'}</Typography>
+            ),
         },
         {
             field: 'read_cnt',
@@ -112,7 +119,7 @@ export const Products: React.FC = () => {
             renderCell: (params: GridRenderCellParams) => {
                 return (
                     <>
-                        <IconButton component={Link} href={`/admin/products/detail/${params.row.id}`}>
+                        <IconButton component={Link} to={`/admin/products/detail/${params.row.id}`}>
                             <EditIcon />
                         </IconButton>
                         <IconButton onClick={() => confirmDelete(params.row)}>

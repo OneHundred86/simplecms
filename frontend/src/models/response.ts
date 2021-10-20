@@ -36,3 +36,4 @@ export type FileUploadResponse = ResponseBase<{ url: string }>;
 export type UserInfoResponse = ResponseBase<{ user: { id: number; email: string; group: number; create_at: string } }>;
 
 export type LoginResponse = ResponseBase<null>;
+export type VoidResponse = ResponseBase<null>;

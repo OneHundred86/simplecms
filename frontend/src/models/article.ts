@@ -11,7 +11,7 @@ export interface Article{
     created_at: string,
     updated_at: string,
     covers?: ArticleCover[],
-    type?: ArticleType[],
+    type?: ArticleType,
 }
 
 export interface ArticleType {
