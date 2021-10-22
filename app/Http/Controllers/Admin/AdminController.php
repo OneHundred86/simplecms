@@ -30,7 +30,7 @@ class AdminController extends Controller
             return $this->e(ErrorCode::USER_NOT_EXISTS);
         }
 
-        if(!$user->checkPassword($request->password, RAW_STRING)){
+        if(!$user->checkPassword($request->password, MD5_STRING)){
             return $this->e(ErrorCode::USER_PASSWORD_ERROR);
         }
 

@@ -11,10 +11,16 @@ class MaterialController extends Controller
     public function uploadImage(Request $request)
     {
         $this->validate($request, [
-            'file' => 'required|image',
+            'file' => 'required',
         ]);
 
         $file = $request->file('file');
+
+        $ext = strtolower($file->clientExtension());
+        $exts_allow = ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'svg'];
+        if(!in_array($ext, $exts_allow)){
+            return $this->e('请上传以下格式的图片：' . join(',', $exts_allow));
+        }
 
         $path = sprintf("public/uploads/images/%s/%s", date('Ymd'), date('His'));
 
