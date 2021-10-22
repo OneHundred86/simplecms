@@ -20,7 +20,7 @@
     <main class="page_main">
         <div class="page_pos_box layout">
             <div class="page_pos">
-                <img src=" images/sit.gif" alt="当前位置" />
+                <img src="images/sit.gif" alt="当前位置" />
                 <span>当前位置：</span>
                 <a href="#">首页</a>
                 <span>&gt;</span>
@@ -31,9 +31,7 @@
         <ul class="m_page_nav">
             <li>
                 <dl>
-                    <dt><span>
-                            产品中心 </span><i class="fa fa-angle-down"></i></dt>
-
+                    <dt><span> 产品中心 </span><i class="fa fa-angle-down"></i></dt>
                 </dl>
             </li>
         </ul>
@@ -105,8 +103,6 @@
                             contentType: 'application/json',
                             data: {
                                 category: 1,
-                                offset: pageNum,
-                                limit: 12
                             }
                             success: function(articleTypeResp) {
                                 $('#root_type').empty();
