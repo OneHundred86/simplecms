@@ -22,27 +22,26 @@ export const EditForm: React.FC<{ detail: Article }> = ({ detail }) => {
                 switchMap(() => {
                     return !formDetail.id
                         ? ArticleDataService.create({
-                            category: 0,
-                            content: formDetail.content,
-                            summary: formDetail.summary,
-                            title: formDetail.title,
-                            type_id: formDetail.type_id,
-                            covers: formDetail.covers.map((x) => x.img),
-                        })
+                              category: 0,
+                              content: formDetail.content,
+                              summary: formDetail.summary,
+                              title: formDetail.title,
+                              type_id: formDetail.type_id,
+                              covers: formDetail.covers.map((x) => x.img),
+                          })
                         : ArticleDataService.edit({
-                            content: formDetail.content,
-                            id: formDetail.id,
-                            summary: formDetail.summary,
-                            title: formDetail.title,
-                            type_id: formDetail.type_id,
-                            covers: formDetail.covers.map((x) => x.img),
-                        });
-                }),
+                              content: formDetail.content,
+                              id: formDetail.id,
+                              summary: formDetail.summary,
+                              title: formDetail.title,
+                              type_id: formDetail.type_id,
+                              covers: formDetail.covers.map((x) => x.img),
+                          });
+                })
             )
             .subscribe({
                 next: (resp) => {
                     if (resp.errcode === 0) {
-
                         history.push('/admin/others');
                         snackBar.enqueueSnackbar('保存其他信息成功', {
                             variant: 'success',
@@ -85,19 +84,26 @@ export const EditForm: React.FC<{ detail: Article }> = ({ detail }) => {
 
             FileUploadService.postImage(formData).subscribe({
                 next: (resp) => {
-                    setFormDetail((state) => {
-                        const covers = state.covers ?? [];
-                        covers.push({
-                            id: -Math.ceil(Math.random() * 1000),
-                            article_id: formDetail.id,
-                            img: resp.data.url,
-                        });
+                    if (resp.errcode === 0) {
+                        setFormDetail((state) => {
+                            const covers = state.covers ?? [];
+                            covers.push({
+                                id: -Math.ceil(Math.random() * 1000),
+                                article_id: formDetail.id,
+                                img: resp.data.url,
+                            });
 
-                        return {
-                            ...state,
-                            covers,
-                        };
-                    });
+                            return {
+                                ...state,
+                                covers,
+                            };
+                        });
+                    } else {
+                        console.error('fail to upload cover', resp.errmessage);
+                        snackBar.enqueueSnackbar(' 上传封面失败', {
+                            variant: 'error',
+                        });
+                    }
                 },
                 error: (err) => {
                     console.error('fail to upload cover', err);
@@ -142,12 +148,7 @@ export const EditForm: React.FC<{ detail: Article }> = ({ detail }) => {
                     </TextField>
                 </Grid>
                 <Grid item xs={12}>
-                    <TextField
-                        fullWidth
-                        label='标题'
-                        value={formDetail.title}
-                        onChange={updateInputValue('title')}
-                    />
+                    <TextField fullWidth label='标题' value={formDetail.title} onChange={updateInputValue('title')} />
                 </Grid>
                 <Grid item xs={12}>
                     <TextField
@@ -183,7 +184,7 @@ export const EditForm: React.FC<{ detail: Article }> = ({ detail }) => {
                                 <ImageList sx={{ minHeight: '160px', width: '100%' }} cols={5} rowHeight={164}>
                                     {formDetail.covers?.map((item) => (
                                         <ImageListItem key={item.id}>
-                                            <img src={`${item.img}`} srcSet={`${item.img}`} loading='lazy' alt={''} />
+                                            <img src={`${item.img}`} alt={''} />
                                         </ImageListItem>
                                     )) ?? <div />}
                                 </ImageList>

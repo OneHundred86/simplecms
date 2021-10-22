@@ -42,12 +42,14 @@ export const Login = () => {
                             ...errorForm,
                             summary: resp.errmessage,
                         });
+                        setCodeState(new Date().valueOf())
                     }
                 },
                 error: (err) => {
                     snakeBar.enqueueSnackbar('登录失败', {
                         variant: 'error',
                     });
+                    setCodeState(new Date().valueOf())
                 },
             });
         } else {

@@ -47,27 +47,26 @@ export const EditForm: React.FC<{ detail: Article }> = ({ detail }) => {
                 switchMap(() => {
                     return !formDetail.id
                         ? ArticleDataService.create({
-                            category: 1,
-                            content: formDetail.content,
-                            summary: formDetail.summary,
-                            title: formDetail.title,
-                            type_id: formDetail.type_id,
-                            covers: formDetail.covers.map((x) => x.img),
-                        })
+                              category: 1,
+                              content: formDetail.content,
+                              summary: formDetail.summary,
+                              title: formDetail.title,
+                              type_id: formDetail.type_id,
+                              covers: formDetail.covers.map((x) => x.img),
+                          })
                         : ArticleDataService.edit({
-                            content: formDetail.content,
-                            id: formDetail.id,
-                            summary: formDetail.summary,
-                            title: formDetail.title,
-                            type_id: formDetail.type_id,
-                            covers: formDetail.covers.map((x) => x.img),
-                        });
-                }),
+                              content: formDetail.content,
+                              id: formDetail.id,
+                              summary: formDetail.summary,
+                              title: formDetail.title,
+                              type_id: formDetail.type_id,
+                              covers: formDetail.covers.map((x) => x.img),
+                          });
+                })
             )
             .subscribe({
                 next: (resp) => {
                     if (resp.errcode === 0) {
-
                         history.push('/admin/products');
                         snackBar.enqueueSnackbar('保存产品信息成功', {
                             variant: 'success',
@@ -131,19 +130,26 @@ export const EditForm: React.FC<{ detail: Article }> = ({ detail }) => {
 
             FileUploadService.postImage(formData).subscribe({
                 next: (resp) => {
-                    setFormDetail((state) => {
-                        const covers = state.covers ?? [];
-                        covers.push({
-                            id: -Math.ceil(Math.random() * 1000),
-                            article_id: formDetail.id,
-                            img: resp.data.url,
-                        });
+                    if (resp.errcode === 0) {
+                        setFormDetail((state) => {
+                            const covers = state.covers ?? [];
+                            covers.push({
+                                id: -Math.ceil(Math.random() * 1000),
+                                article_id: formDetail.id,
+                                img: resp.data.url,
+                            });
 
-                        return {
-                            ...state,
-                            covers,
-                        };
-                    });
+                            return {
+                                ...state,
+                                covers,
+                            };
+                        });
+                    } else {
+                        console.error('fail to upload image', resp.errmessage);
+                        snackBar.enqueueSnackbar(' 上传封面失败', {
+                            variant: 'error',
+                        });
+                    }
                 },
                 error: (err) => {
                     console.error('fail to upload image', err);
