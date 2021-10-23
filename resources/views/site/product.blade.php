@@ -85,16 +85,17 @@
                     <select class="">
                     </select>
                 </div>
-                <ul class="pro_hid">
-
-                </ul>
-                <ul class="m_pro">
-                    数据加载中，请稍后...
-                </ul>
+                <ul class="pro_hid"> </ul>
+                <ul class="m_pro"> 数据加载中，请稍后...  </ul>
                 <a href="javascript:void(0);" class="loading_bnt"
                     onClick="loading.loadMore();"><i></i><span>加载更多</span></a>
                 <script>
                     var articleTypeList = [];
+                    var queryStrings = {};
+                    $.each(document.location.search.substr(1).split('&'), function(c, q) {
+                        var i = q.split('=');
+                        queryStrings[i[0].toString()] = i[1].toString();
+                    });
 
                     function initArticleType(pageNum) {
                         $.ajax({
@@ -106,19 +107,29 @@
                             }
                             success: function(articleTypeResp) {
                                 $('#root_type').empty();
-                                $('#root_type').append('<a class="active" data-typeId="" href="#" >全部</a>')
+                                $('#root_type').append('<a data-typeId="" href="#" >全部</a>')
+                                if (!queryString['root_type']) {
+                                    $('#root_type > a').addClass('active');
+                                }
+
                                 if (articleTypeResp.data) {
                                     articleTypeList = articleTypeResp.data.list;
-
                                     var rootTypeList = articleTypeList.filter(function(x) {
                                         return !x.parent_id
                                     }).map(function(x) {
+                                        if (queryString['root_type'] === x.id) {
+                                            return '<a class="active" href="#" data-typeId="' + x.id + '" >' + x
+                                                .name + '</a>'
+                                        }
                                         return '<a href="#" data-typeId="' + x.id + '" >' + x.name + '</a>'
                                     })
                                     $('#root_type').append(rootTypeList.join(''));
 
                                     $('#root_type > a').on('click', function(e) {
-                                        handleSelectRootCategory(this.data['typeId'])
+                                        $('#root_type > a').removeClass('active');
+                                        $(e.target).addClass('active');
+
+                                        handleSelectRootCategory(e.target.data['typeId'])
                                     })
                                 }
                             }
@@ -128,18 +139,27 @@
 
                     function handleSelectRootCategory(type_id) {
                         $('#sub_type').empty();
-                        $('#sub_type').append('<a class="active" data-typeId="" href="#" >全部</a>')
+                        $('#sub_type').append('<a data-typeId="" href="#" >全部</a>')
+                        if (!queryString['sub_type']) {
+                            $('#root_type > a').addClass('active');
+                        }
 
                         var subTypeList = articleTypeList.filter(function(x) {
                             return x.parent_id === type_id
                         });
                         subTypeListMap = subTypeList.map(function(x) {
-                            return '<a class="active" data-typeId="' + x.id + '" href="#" >全部</a>'
+                            if (queryString['sub_type'] === x.id) {
+                                return '<a class="active" data-typeId="' + x.id + '" href="#" >' + x.name + '</a>'
+                            }
+                            return '<a data-typeId="' + x.id + '" href="#" >' + x.name + '</a>'
                         })
 
                         $('#sub_type').append(subTypeList.join(''));
                         $('#sub_type > a').on('click', function(e) {
-                            fetchData.type_id = this.data['typeId'];
+                            $('#root_type > a').removeClass('active');
+                            $(e.target).addClass('active');
+
+                            fetchData.type_id = e.target.data['typeId'];
                             fetchData.offset = 0;
                             fetchProductList();
                         })
@@ -164,7 +184,7 @@
                             if (resp.errcode === 0) {
                                 articleList = resp.data.list,
                                     var articleHidElementList = articleList.map(function(article) {
-                                        return '<li><a href="pro_nay.html?id=' + article.id +
+                                        return '<li><a href="prod_nay.html?id=' + article.id +
                                             '"><div class="pro_pic"><img realSrc="' + article.covers[0].url +
                                             '" alt="' + article.title +
                                             '" /></div> <div class="pro_words"><h5></h5> </div> </a></li>'
@@ -174,9 +194,10 @@
 
                                 articleElementList = articleList.map(function(article) {
                                     return '<li>' +
-                                        '<a href="prod_nay.html"><div class="pro_pic"><img class="show" src="' +
+                                        '<a href="prod_nay.html?id=' + article.id +
+                                        '"><div class="pro_pic"><img class="show" src="' +
                                         article.covers[0] + '" alt="' + article.title + '" /></div>' +
-                                        '<div class="pro_words"><div class="pro_bg"><h5><a href="pro_nay.html?id="' +
+                                        '<div class="pro_words"><div class="pro_bg"><h5><a href="prod_nay.html?id="' +
                                         article.id + '>' + article.title + '</a></h5> </div> </div>' +
                                         '</li>'
                                 });

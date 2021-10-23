@@ -74,7 +74,7 @@
                 </ul>
                 <div class="fenye">
                     <ul></ul>
-                    <select class="" onchange='javascript:location.href=this.options[this.selectedIndex].value'>
+                    <select class="">
                     </select>
                 </div><!-- 新闻专区 -->
                 <ul class="news_hid">

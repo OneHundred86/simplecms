@@ -84,6 +84,7 @@ export const Products: React.FC = () => {
         {
             field: 'title',
             headerName: '标题',
+            flex: 1,
             sortable: false,
         },
         {
@@ -108,8 +109,9 @@ export const Products: React.FC = () => {
             sortable: false,
         },
         {
-            field: 'created_time',
+            field: 'created_at',
             headerName: '创建时间',
+            flex: 1,
             sortable: false,
         },
         {

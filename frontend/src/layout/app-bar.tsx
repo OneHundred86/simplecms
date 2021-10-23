@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { IconButton, styled, Toolbar, Typography } from '@mui/material';
+import { Button, IconButton, styled, Toolbar, Typography } from '@mui/material';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import MenuIcon from '@mui/icons-material/Menu';
-import { PortalMessageService } from '../services';
+import { LoginService, PortalMessageService } from '../services';
 import { CHANNEL_APP_BAR_TITLE } from '../components/portal';
 
 interface AppBarProps extends MuiAppBarProps {
@@ -40,6 +40,14 @@ export const AppBar: React.FC<{ open; toggleDrawer }> = ({ open, toggleDrawer })
         };
     }, []);
 
+    const handleSignOut = () => {
+        LoginService.signOut().subscribe({
+            next: () => {
+                window.location.reload();
+            }
+        });
+    }
+
     return (
         <StyleAppBar position='absolute' open={open}>
             <Toolbar
@@ -60,6 +68,10 @@ export const AppBar: React.FC<{ open; toggleDrawer }> = ({ open, toggleDrawer })
                 <Typography component='h1' variant='h6' color='inherit' noWrap sx={{ flexGrow: 1 }}>
                     {title}
                 </Typography>
+
+                <Button onClick={handleSignOut} sx={{ color: '#fff' }} variant="text">
+                    注销
+                </Button>
             </Toolbar>
         </StyleAppBar>
     );

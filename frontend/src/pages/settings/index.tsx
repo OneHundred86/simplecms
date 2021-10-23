@@ -74,6 +74,7 @@ export const Settings = () => {
         {
             field: "name",
             headerName: "名称",
+            flex: 1,
             sortable: false
         },
         {
@@ -84,6 +85,7 @@ export const Settings = () => {
         {
             field: "category",
             headerName: "操作",
+            flex: 1,
             sortable: false,
             renderCell: (params: GridRenderEditCellParams) => {
                 return (
@@ -200,7 +202,8 @@ export const Settings = () => {
             pagination
             pageSize={filter.limit}
             page={filter.offset}
-            rowCount={dataSource.length}
+            rowCount={filterData().length}
+            paginationMode="server"
             rowsPerPageOptions={[10, 20, 50, 100]}
             onPageChange={pageChange}
             onPageSizeChange={pageSizeChange}
