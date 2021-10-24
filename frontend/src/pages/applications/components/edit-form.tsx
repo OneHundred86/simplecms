@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { Box, Button, Grid, ImageList, ImageListItem, MenuItem, Paper, TextField, Typography } from '@mui/material';
+import { Box, Button, Grid, IconButton, ImageList, ImageListItem, ImageListItemBar, MenuItem, Paper, TextField, Typography } from '@mui/material';
+import CancelIcon from '@mui/icons-material/Cancel';
 import { Article, ArticleType, ArticleTypeListResponse } from '../../../models';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -134,6 +135,18 @@ export const EditForm: React.FC<{ detail: Article }> = ({ detail }) => {
         }
     }
 
+    function handleDeleteCover(coverIndex): void {
+        setFormDetail((state) => {
+            const covers = state.covers ?? [];
+            covers.splice(coverIndex, 1);
+
+            return {
+                ...state,
+                covers,
+            };
+        });
+    }
+
     function handleContentUpdate(event, editor): void {
         const rawContent = editor.getData();
 
@@ -208,9 +221,18 @@ export const EditForm: React.FC<{ detail: Article }> = ({ detail }) => {
                             </Grid>
                             <Grid item xs={12}>
                                 <ImageList sx={{ minHeight: '160px', width: '100%' }} cols={5} rowHeight={164}>
-                                    {formDetail.covers?.map((item) => (
+                                    {formDetail.covers?.map((item, index) => (
                                         <ImageListItem key={item.id}>
                                             <img src={`${item.img}`} srcSet={`${item.img}`} loading='lazy' alt={''} />
+                                            <ImageListItemBar
+                                                position="top"
+                                                actionPosition="right"
+                                                actionIcon={
+                                                    <IconButton onClick={() => handleDeleteCover(index)} sx={{ color: 'red' }} >
+                                                        <CancelIcon />
+                                                    </IconButton>
+                                                }
+                                            />
                                         </ImageListItem>
                                     )) ?? <div />}
                                 </ImageList>
