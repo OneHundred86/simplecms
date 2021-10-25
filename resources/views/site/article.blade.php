@@ -161,7 +161,7 @@
                             $('#root_type > a').on('click', function(e) {
                                 $(e.target).addClass('active');
 
-                                var type_id = e.target.data['typeId'];
+                                var type_id = e.target.dataset.typeid;
                                 window.location.href = '' + {{ $category_url }} + '.?type_id=' + type_id;
                             })
                         }

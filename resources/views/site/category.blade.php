@@ -133,7 +133,8 @@
                                         $('#root_type > a').on('click', function(e) {
                                             $('#root_type > a').removeClass('active');
                                             $(e.target).addClass('active');
-                                            fetchData.type_id = e.target.data['typeId'];
+                                            fetchData.type_id = e.target.dataset.typeid;
+
                                             fetchArticleList();
                                         })
                                     }
@@ -233,7 +234,7 @@
                             $('.fenye ul li').on('click', function(e) {
                                 var ele = e.target;
                                 if (ele) {
-                                    var offset = ele.data['offset'];
+                                    var offset = ele.dataset.offset;
                                     if (offset >= 0) {
                                         fetchData.offset = offset;
                                         fetchProductList();

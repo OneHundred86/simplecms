@@ -225,7 +225,7 @@
                         $('.fenye ul li').on('click', function(e) {
                             var ele = e.target;
                             if (ele) {
-                                var offset = ele.data['offset'];
+                                var offset = ele.dataset.offset;
                                 if (offset >= 0) {
                                     fetchData.offset = offset;
                                     fetchArticleList();

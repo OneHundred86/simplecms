@@ -131,7 +131,7 @@
                                         $('#root_type > a').removeClass('active');
                                         $(e.target).addClass('active');
 
-                                        handleSelectRootCategory(e.target.data['typeId'])
+                                        handleSelectRootCategory(e.target.dataset.typeid)
                                     })
                                 }
                             }
@@ -161,7 +161,7 @@
                             $('#root_type > a').removeClass('active');
                             $(e.target).addClass('active');
 
-                            fetchData.type_id = e.target.data['typeId'];
+                            fetchData.type_id = e.target.dataset.typeid;
                             fetchData.offset = 0;
                             fetchProductList();
                         })
@@ -254,7 +254,7 @@
                         $('.fenye ul li').on('click', function(e) {
                             var ele = e.target;
                             if (ele) {
-                                var offset = ele.data['offset'];
+                                var offset = ele.dataset.offset;
                                 if (offset >= 0) {
                                     fetchData.offset = offset;
                                     fetchProductList();
