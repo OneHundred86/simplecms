@@ -193,45 +193,46 @@
                                 '</li>'
                         }
 
-                        function loadPagignations(pageSize) {
-                            var paginationList = ['<li data-offset="' + offset - 1 +
+                        function loadPagignations(totalPage) {
+                            var paginationList = ['<li data-offset="' + fetchData.offset - 1 +
                                 '" class="fenye-p"><a href="#"><i class="fa fa-angle-left"></i></a></li>'
                             ];
 
-                            if (offset > 5) {
+                            if (fetchData.offset > 5) {
                                 paginationList.push('<li><span>···</span></li>');
                             }
-                            if (offset < 5) {
-                                for (var index = 1; index <= pageSize; index++) {
+                            if (fetchData.offset < 5) {
+                                for (var index = 1; index <= totalPage; index++) {
                                     paginationList.push('<li data-offset="' + index - 1 + '"><a href="#">' + index + '</a></li>');
                                     if (index >= 5) {
                                         paginationList.push('<li><span>···</span></li>');
-                                        paginationList.push('<li data-offset="' + pageSize - 1 + '"><a href="#">' + pageSize + '</a></li>');
+                                        paginationList.push('<li data-offset="' + fetchData.totalPage - 1 + '"><a href="#">' + totalPage +
+                                            '</a></li>');
                                     }
                                 }
-                            } else if (offset >= pageSize - 4) {
-                                for (var index = offset - 1; index <= pageSize; index++) {
+                            } else if (fetchData.offset >= totalPage - 4) {
+                                for (var index = offset - 1; index <= totalPage; index++) {
                                     paginationList.push('<li data-offset="' + index - 1 + '" ><a href="#">' + index + '</a></li>');
                                 }
                             } else {
-                                for (var index = offset - 1; index <= offset + 3; index++) {
+                                for (var index = fetchData.offset - 1; index <= fetchData.offset + 3; index++) {
                                     paginationList.push('<li data-offset="' + index - 1 + '"><a href="#">' + index + '</a></li>');
                                 }
                                 paginationList.push('<li><span>···</span></li>');
-                                paginationList.push('<li data-offset="' + pageSize - 1 + '"><a href="#">' + pageSize + '</a></li>');
+                                paginationList.push('<li data-offset="' + totalPage - 1 + '"><a href="#">' + totalPage + '</a></li>');
                             }
-                            paginationList.push('<li data-offset="' + offset + 1 +
+                            paginationList.push('<li data-offset="' + fetchData.offset + 1 +
                                 '" class="fenye-n"><a href="#"><i class="fa fa-angle-right"></i></a></li>')
 
                             $('.fenye ul').append(paginationList.join(''));
 
                             var paginationSelect = [];
-                            for (var i = 1; i <= pageSize; i++) {
+                            for (var i = 1; i <= totalPag; i++) {
                                 paginationSelect.push('<option value="' + i - 1 + '">' + i + '</option>')
                             }
                             $('.fenye select').append(paginationSelect.join(''));
 
-                            $('.fenye ul li[data-offset]="' + offset + '"').addClass('active');
+                            $('.fenye ul li[data-offset]="' + fetchData.offset + '"').addClass('active');
                             $('.fenye ul li').on('click', function(e) {
                                 var ele = e.target;
                                 if (ele) {
