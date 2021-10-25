@@ -18,7 +18,7 @@
     <div class="f_pn2 layout">
         <div class="f_pic">
             <div class="f_logo">
-                <a href="#"><img src="images/logo_foot.png" alt="广州迪川仪器仪表有限公司logo"/></a>
+                <a href="#"><img src="/images/logo_foot.png" alt="广州迪川仪器仪表有限公司logo"/></a>
             </div>
 
             <div class="share">
@@ -71,7 +71,7 @@
             <li>
 
                 <div class="f_wordspic">
-                    <p><img src="images/code.jpg" alt="官方微信"/>官方微信</p>
+                    <p><img src="/images/code.jpg" alt="官方微信"/>官方微信</p>
 
                 </div>
 
