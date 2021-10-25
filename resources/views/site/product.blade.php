@@ -215,6 +215,7 @@
                             }
                         })
                     }
+                    fetchProductList();
 
                     function loadPagignations(pageSize) {
                         var paginationList = ['<li data-offset="' + offset - 1 +
