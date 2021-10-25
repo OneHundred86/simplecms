@@ -114,11 +114,11 @@
         </section>
         <script>
             var articleTypeList = [];
-            var queryStrings = {};
+            var queryString = {};
             $.each(document.location.search.substr(1).split('&'), function(c, q) {
                 var i = q.split('=');
                 if (i.length >= 2) {
-                    queryStrings[i[0].toString()] = i[1].toString();
+                    queryString[i[0].toString()] = i[1].toString();
                 }
             });
 
@@ -180,7 +180,7 @@
                     dataType: 'json',
                     contentType: 'application/json',
                     data: {
-                        id: queryStrings['id'],
+                        id: queryString['id'],
                     },
                     success: function(resp) {
                         articleDetail = resp.data.info;

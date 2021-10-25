@@ -7,7 +7,7 @@
     $category_name_en = 'Product center';
     $category_detail_url = '/prod_nay.html';
     $banner_img = '/images/ban_prod.jpg';
-    $banner_name = "";
+    $banner_name = '';
     ?>
 </script>
 @section('banner')
@@ -94,11 +94,11 @@
                         onClick="loading.loadMore();"><i></i><span>加载更多</span></a>
                     <script>
                         var articleTypeList = [];
-                        var queryStrings = {};
+                        var queryString = {};
                         $.each(document.location.search.substr(1).split('&'), function(c, q) {
                             var i = q.split('=');
                             if (i.length >= 2) {
-                                queryStrings[i[0].toString()] = i[1].toString();
+                                queryString[i[0].toString()] = i[1].toString();
                             }
                         });
 
