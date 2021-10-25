@@ -1,12 +1,15 @@
 @extends('site.page_base')
 <script>
-    {{ $category = 1;
-$category_name = '产品中心';
-$category_url = 'product.html';
-$category_name_en = 'Product center';
-$category_detail_name = '产品详情';
-$category_detail_url = 'prod_nay.html';
-$banner_img = 'images/ban_prod.jpg' }}
+    <?php
+    $category = 1;
+    $category_name = '产品中心';
+    $category_url = 'product.html';
+    $category_name_en = 'Product center';
+    $category_detail_name = '产品详情';
+    $category_detail_url = 'prod_nay.html';
+    $banner_img = 'images/ban_prod.jpg';
+    $banner_name = "";
+    ?>
 </script>
 @section('banner')
     <div class="banner_box layout2">

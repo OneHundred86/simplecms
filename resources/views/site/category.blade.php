@@ -1,10 +1,14 @@
 @extends('site.page_base')
 <script>
     _CAT = {{ $category }};
-    {{ $category_name = '产品中心';
-$category_name_en = 'Product center';
-$banner_img = 'images/ban_prod.jpg';
-$category_detail_url = 'prod_nay.html' }}
+
+    <?php
+    $category_name = '产品中心';
+    $category_name_en = 'Product center';
+    $category_detail_url = '/prod_nay.html';
+    $banner_img = '/images/ban_prod.jpg';
+    $banner_name = "";
+    ?>
 </script>
 @section('banner')
     <div class="page_img">
@@ -24,7 +28,7 @@ $category_detail_url = 'prod_nay.html' }}
     <main class="page_main">
         <div class="page_pos_box layout">
             <div class="page_pos">
-                <img src="images/sit.gif" alt="当前位置" />
+                <img src="/images/sit.gif" alt="当前位置" />
                 <span>当前位置：</span>
                 <a href="#">首页</a>
                 <span>&gt;</span>

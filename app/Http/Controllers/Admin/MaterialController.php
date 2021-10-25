@@ -16,7 +16,7 @@ class MaterialController extends Controller
 
         $file = $request->file('file');
 
-        $ext = strtolower($file->clientExtension());
+        $ext = strtolower($file->getClientOriginalExtension());
         $exts_allow = ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'svg'];
         if(!in_array($ext, $exts_allow)){
             return $this->e('请上传以下格式的图片：' . join(',', $exts_allow));
