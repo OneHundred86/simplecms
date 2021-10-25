@@ -218,7 +218,7 @@
                     fetchProductList();
 
                     function loadPagignations(totalPage) {
-                        var paginationList = ['<li data-offset="' + fetchData.offset - 1 +
+                        var paginationList = ['<li data-offset="' + (fetchData.offset - 1) +
                             '" class="fenye-p"><a href="#"><i class="fa fa-angle-left"></i></a></li>'
                         ];
 
@@ -255,7 +255,7 @@
                         }
                         $('.fenye select').append(paginationSelect.join(''));
 
-                        $('.fenye ul li[data-offset]="' + fetchData.offset + '"').addClass('active');
+                        $('.fenye ul li[data-offset="' + fetchData.offset + '"]').addClass('active');
                         $('.fenye ul li').on('click', function(e) {
                             var ele = e.target;
                             if (ele) {
@@ -267,7 +267,7 @@
                             }
                         });
 
-                        $('.fenye select').value = offset;
+                        $('.fenye select').value = fetchData.offset;
                     }
 
                     var _content = []; //临时存储li循环内容
