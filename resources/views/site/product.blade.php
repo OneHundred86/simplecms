@@ -250,7 +250,7 @@
                         $('.fenye ul').append(paginationList.join(''));
 
                         var paginationSelect = [];
-                        for (var i = 1; i <= totalPag; i++) {
+                        for (var i = 1; i <= totalPage; i++) {
                             paginationSelect.push('<option value="' + i - 1 + '">' + i + '</option>')
                         }
                         $('.fenye select').append(paginationSelect.join(''));
