@@ -86,7 +86,7 @@
                     </select>
                 </div>
                 <ul class="pro_hid"> </ul>
-                <ul class="m_pro"> 数据加载中，请稍后...  </ul>
+                <ul class="m_pro"> 数据加载中，请稍后... </ul>
                 <a href="javascript:void(0);" class="loading_bnt"
                     onClick="loading.loadMore();"><i></i><span>加载更多</span></a>
                 <script>
@@ -94,7 +94,9 @@
                     var queryStrings = {};
                     $.each(document.location.search.substr(1).split('&'), function(c, q) {
                         var i = q.split('=');
-                        queryStrings[i[0].toString()] = i[1].toString();
+                        if (i.length >= 2) {
+                            queryStrings[i[0].toString()] = i[1].toString();
+                        }
                     });
 
                     function initArticleType(pageNum) {
@@ -104,7 +106,7 @@
                             contentType: 'application/json',
                             data: {
                                 category: 1,
-                            }
+                            },
                             success: function(articleTypeResp) {
                                 $('#root_type').empty();
                                 $('#root_type').append('<a data-typeId="" href="#" >全部</a>')
@@ -182,13 +184,13 @@
                             dataType: 'JSON'
                         }).done(function(resp) {
                             if (resp.errcode === 0) {
-                                articleList = resp.data.list,
-                                    var articleHidElementList = articleList.map(function(article) {
-                                        return '<li><a href="prod_nay.html?id=' + article.id +
-                                            '"><div class="pro_pic"><img realSrc="' + article.covers[0].url +
-                                            '" alt="' + article.title +
-                                            '" /></div> <div class="pro_words"><h5></h5> </div> </a></li>'
-                                    })
+                                articleList = resp.data.list;
+                                var articleHidElementList = articleList.map(function(article) {
+                                    return '<li><a href="prod_nay.html?id=' + article.id +
+                                        '"><div class="pro_pic"><img realSrc="' + article.covers[0].url +
+                                        '" alt="' + article.title +
+                                        '" /></div> <div class="pro_words"><h5></h5> </div> </a></li>'
+                                })
 
                                 $('.pro_hid').append(articleHidElementList)
 

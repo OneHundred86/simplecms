@@ -104,7 +104,7 @@
                             contentType: 'application/json',
                             data: {
                                 category: 2
-                            }
+                            },
                             success: function(articleTypeResp) {
                                 $('#root_type').empty();
                                 $('#root_type').append('<a class="active" data-typeId="" href="#" >全部</a>')
@@ -151,16 +151,16 @@
                             dataType: 'JSON'
                         }).done(function(resp) {
                             if (resp.errcode === 0) {
-                                articleList = resp.data.list,
-                                    var articleHidElementList = articleList.map(function(article) {
-                                        return '<li>' +
-                                            '<a href="' + article.covers[0].url + '" data-caption="' + article.title +
-                                            '">' +
-                                            '<div class="pro_pic"><img realSrc="' + article.covers[0].url + '" alt="' +
-                                            article.title + '" /></div>' +
-                                            '<div class="pro_words"><h5>' + article.title + '</h5> </div>' +
-                                            '</a> </li>'
-                                    })
+                                articleList = resp.data.list;
+                                var articleHidElementList = articleList.map(function(article) {
+                                    return '<li>' +
+                                        '<a href="' + article.covers[0].url + '" data-caption="' + article.title +
+                                        '">' +
+                                        '<div class="pro_pic"><img realSrc="' + article.covers[0].url + '" alt="' +
+                                        article.title + '" /></div>' +
+                                        '<div class="pro_words"><h5>' + article.title + '</h5> </div>' +
+                                        '</a> </li>'
+                                })
 
                                 $('.pro_hid').append(articleHidElementList)
 

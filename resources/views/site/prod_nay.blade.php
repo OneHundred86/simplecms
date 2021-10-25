@@ -117,7 +117,9 @@
             var queryStrings = {};
             $.each(document.location.search.substr(1).split('&'), function(c, q) {
                 var i = q.split('=');
-                queryStrings[i[0].toString()] = i[1].toString();
+                if (i.length >= 2) {
+                    queryStrings[i[0].toString()] = i[1].toString();
+                }
             });
 
             function initArticleType(pageNum) {
@@ -127,7 +129,7 @@
                     contentType: 'application/json',
                     data: {
                         category: 1,
-                    }
+                    },
                     success: function(articleTypeResp) {
                         $('#root_type').empty();
                         $('#root_type').append('<a data-typeId="" href="#" >全部</a>')

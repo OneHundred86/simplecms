@@ -102,18 +102,18 @@
                             dataType: 'JSON'
                         }).done(function(resp) {
                             if (resp.errcode === 0) {
-                                articleList = resp.data.list,
-                                    var articleHidElementList = articleList.map(function(article) {
-                                        return '<li class="img_scale">' + '<a href="news_nay.html?id=' + article.id +
-                                            '">' +
-                                            '<div class="pic"><img src="' + article.covers[0].url + '" alt="' + article
-                                            .title + '"/></div>' +
-                                            '<div class="words">' +
-                                            '<h5>' + article.title + '</h5><p>' + article.summary + '</p>' +
-                                            '<div class="bot"> <time>' + article.created_at +
-                                            '</time><em><i class="pro_ico"></i> 查看详情</em> </div>' +
-                                            ' </div></a>' + '</li>'
-                                    })
+                                articleList = resp.data.list;
+                                var articleHidElementList = articleList.map(function(article) {
+                                    return '<li class="img_scale">' + '<a href="news_nay.html?id=' + article.id +
+                                        '">' +
+                                        '<div class="pic"><img src="' + article.covers[0].url + '" alt="' + article
+                                        .title + '"/></div>' +
+                                        '<div class="words">' +
+                                        '<h5>' + article.title + '</h5><p>' + article.summary + '</p>' +
+                                        '<div class="bot"> <time>' + article.created_at +
+                                        '</time><em><i class="pro_ico"></i> 查看详情</em> </div>' +
+                                        ' </div></a>' + '</li>'
+                                })
                                 $('.news.news_hid').append(articleHidElementList)
 
                                 articleElementList = articleList.map(function(article) {

@@ -7,15 +7,17 @@ $banner_img = 'images/ban_prod.jpg';
 $category_detail_url = 'prod_nay.html' }}
 </script>
 @section('banner')
-    <div class="page_img">
-        <div class="pic"><img src="{{ $banner_img }}" alt="{{ $banner_name }}" /></div>
-        <div class="ind_tit">
-            <h3>{{ $banner_name }}</h3>
-            <figure>
-                <h4>{{ $category_name_en }}</h4>
-            </figure>
+    <div class="banner_box layout2">
+        <div class="page_img">
+            <div class="pic"><img src="{{ $banner_img }}" alt="{{ $banner_name }}" /></div>
+            <div class="ind_tit">
+                <h3>{{ $banner_name }}</h3>
+                <figure>
+                    <h4>{{ $category_name_en }}</h4>
+                </figure>
 
-            <i class="ind_tit_ico2"></i>
+                <i class="ind_tit_ico2"></i>
+            </div>
         </div>
     </div>
 @endsection
@@ -91,7 +93,9 @@ $category_detail_url = 'prod_nay.html' }}
                         var queryStrings = {};
                         $.each(document.location.search.substr(1).split('&'), function(c, q) {
                             var i = q.split('=');
-                            queryStrings[i[0].toString()] = i[1].toString();
+                            if (i.length >= 2) {
+                                queryStrings[i[0].toString()] = i[1].toString();
+                            }
                         });
 
                         function initArticleType(pageNum) {
@@ -101,7 +105,7 @@ $category_detail_url = 'prod_nay.html' }}
                                 contentType: 'application/json',
                                 data: {
                                     category: _CAT,
-                                }
+                                },
                                 success: function(articleTypeResp) {
                                     $('#root_type').empty();
                                     $('#root_type').append('<a data-typeId="" href="#" >全部</a>')
@@ -151,8 +155,8 @@ $category_detail_url = 'prod_nay.html' }}
                                 dataType: 'JSON'
                             }).done(function(resp) {
                                 if (resp.errcode === 0) {
-                                    articleList = resp.data.list,
-                                        var articleHidElementList = articleList.map(mobileItemTemplate)
+                                    articleList = resp.data.list;
+                                    var articleHidElementList = articleList.map(mobileItemTemplate)
                                     $('.pro_hid').append(articleHidElementList)
 
                                     articleElementList = articleList.map(itemTemplate);

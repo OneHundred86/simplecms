@@ -129,7 +129,9 @@ $banner_img = 'images/ban_prod.jpg' }}
             var queryStrings = {};
             $.each(document.location.search.substr(1).split('&'), function(c, q) {
                 var i = q.split('=');
-                queryStrings[i[0].toString()] = i[1].toString();
+                if (i.length >= 2) {
+                    queryStrings[i[0].toString()] = i[1].toString();
+                }
             });
 
             function initArticleType(pageNum) {
@@ -139,7 +141,7 @@ $banner_img = 'images/ban_prod.jpg' }}
                     contentType: 'application/json',
                     data: {
                         category: {{ $category }},
-                    }
+                    },
                     success: function(articleTypeResp) {
                         $('#root_type').empty();
                         $('#root_type').append('<a data-typeId="" href="#" >全部</a>')
