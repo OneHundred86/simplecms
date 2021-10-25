@@ -131,7 +131,11 @@
                                         $('#root_type > a').removeClass('active');
                                         $(e.target).addClass('active');
 
-                                        handleSelectRootCategory(e.target.dataset.typeid)
+                                        handleSelectRootCategory(e.target.dataset.typeid);
+
+                                        fetchData.type_id = e.target.dataset.typeid;
+                                        fetchData.offset = 0;
+                                        fetchProductList();
                                     })
                                 }
                             }
@@ -143,7 +147,7 @@
                         $('#sub_type').empty();
                         $('#sub_type').append('<a data-typeId="" href="#" >全部</a>')
                         if (!queryString['sub_type']) {
-                            $('#root_type > a').addClass('active');
+                            $('#sub_type > a').addClass('active');
                         }
 
                         var subTypeList = articleTypeList.filter(function(x) {
