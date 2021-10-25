@@ -144,7 +144,7 @@
                             $('#root_type').append(rootTypeList.join(''));
 
                             $('#root_type > a').on('click', function(e) {
-                                handleSelectRootCategory(e.target.data['typeId'])
+                                handleSelectRootCategory(e.target.dataset.typeid)
                             })
                         }
                     }
@@ -165,7 +165,7 @@
 
                 $('#sub_type').append(subTypeList.join(''));
                 $('#sub_type > a').on('click', function(e) {
-                    fetchData.type_id = e.target.data['typeId'];
+                    fetchData.type_id = e.target.dataset.typeid;
                     fetchData.offset = 0;
 
                     window.location.href = '/product.html?type_id=' + type_id + '&sub_id=' + fetchData.type_id;
@@ -178,6 +178,7 @@
                 $.ajax({
                     url: '/article/info',
                     dataType: 'json',
+                    method: 'GET',
                     contentType: 'application/json',
                     data: {
                         id: queryString['id'],
@@ -189,6 +190,7 @@
                     }
                 });
             }
+            loadDetail();
 
             function setContent() {
                 $('#pro_title').html(articleDetail.title);

@@ -183,7 +183,7 @@
                         return $.ajax({
                             url: '/article/list',
                             data: fetchData,
-                            method: 'POST',
+                            method: 'GET',
                             contentType: 'application/json',
                             dataType: 'JSON'
                         }).done(function(resp) {

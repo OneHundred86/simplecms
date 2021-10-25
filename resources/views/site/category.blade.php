@@ -155,7 +155,7 @@
                             return $.ajax({
                                 url: '/article/list',
                                 data: fetchData,
-                                method: 'POST',
+                                method: 'GET',
                                 contentType: 'application/json',
                                 dataType: 'JSON'
                             }).done(function(resp) {
@@ -173,6 +173,7 @@
                                 }
                             })
                         }
+                        fetchArticleList();
 
                         function mobileItemTemplate(article) {
                             return '<li><a href="' + {{ $category_detail_url }} + '?id=' + article.id +

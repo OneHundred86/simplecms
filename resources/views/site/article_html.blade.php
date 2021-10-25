@@ -83,7 +83,6 @@
                     </ul>
                     <select class=""
                         onchange='javascript:location.href=this.options[this.selectedIndex].value'>
-                        <option value="#" selected>1</option>
                     </select>
                 </div>
                 <ul class="pro_hid">
@@ -97,10 +96,11 @@
                 <script>
                     var articleTypeList = [];
 
-                    function initArticleType(pageNum) {
+                    function initArticleType() {
                         $.ajax({
                             url: '/article/type/list',
                             dataType: 'json',
+                            method: 'GET',
                             contentType: 'application/json',
                             data: {
                                 category: 2
@@ -108,6 +108,10 @@
                             success: function(articleTypeResp) {
                                 $('#root_type').empty();
                                 $('#root_type').append('<a class="active" data-typeId="" href="#" >全部</a>')
+                                if (!queryString['root_type']) {
+                                    $('#root_type > a').addClass('active');
+                                }
+
                                 if (articleTypeResp.data) {
                                     articleTypeList = articleTypeResp.data.list;
 
@@ -120,7 +124,7 @@
 
                                     $('#root_type > a').on('click', function(e) {
                                         e.preventDefault();
-                                        handleSelectRootCategory(this.data['typeId'])
+                                        handleSelectRootCategory(e.target.dataset.typeid)
                                     })
                                 }
                             }
@@ -146,7 +150,7 @@
                         return $.ajax({
                             url: '/article/list',
                             data: fetchData,
-                            method: 'POST',
+                            method: 'GET',
                             contentType: 'application/json',
                             dataType: 'JSON'
                         }).done(function(resp) {
@@ -182,6 +186,7 @@
                             }
                         })
                     }
+                    fetchArticleList();
 
                     function loadPagignations(pageSize) {
                         var paginationList = ['<li data-offset="' + offset - 1 +

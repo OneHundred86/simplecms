@@ -8,7 +8,7 @@
     $category_detail_name = '产品详情';
     $category_detail_url = 'prod_nay.html';
     $banner_img = 'images/ban_prod.jpg';
-    $banner_name = "";
+    $banner_name = '';
     ?>
 </script>
 @section('banner')
@@ -137,7 +137,7 @@
                 }
             });
 
-            function initArticleType(pageNum) {
+            function initArticleType() {
                 $.ajax({
                     url: '/article/type/list',
                     dataType: 'json',
@@ -148,21 +148,31 @@
                     success: function(articleTypeResp) {
                         $('#root_type').empty();
                         $('#root_type').append('<a data-typeId="" href="#" >全部</a>')
+                        if (!queryString['root_type']) {
+                            $('#root_type > a').addClass('active');
+                        }
+
                         if (articleTypeResp.data) {
                             articleTypeList = articleTypeResp.data.list;
 
                             var rootTypeList = articleTypeList.filter(function(x) {
                                 return !x.parent_id
                             }).map(function(x) {
+                                if (queryString['root_type'] === x.id) {
+                                    return '<a class="active" href="#" data-typeId="' + x.id + '" >' + x
+                                        .name + '</a>'
+                                }
                                 return '<a href="#" data-typeId="' + x.id + '" >' + x.name + '</a>'
                             })
                             $('#root_type').append(rootTypeList.join(''));
 
                             $('#root_type > a').on('click', function(e) {
+                                $('#root_type > a').removeClass('active');
                                 $(e.target).addClass('active');
 
                                 var type_id = e.target.dataset.typeid;
-                                window.location.href = '' + {{ $category_url }} + '.?type_id=' + type_id;
+                                window.location.href = '' + {{ $category_url }} + '.?root_type=' +
+                                    type_id;
                             })
                         }
                     }
