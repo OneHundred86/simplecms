@@ -104,16 +104,16 @@
                             if (resp.errcode === 0) {
                                 articleList = resp.data.list;
                                 var articleHidElementList = articleList.map(function(article) {
-                                        return '<li class="img_scale">' + '<a href="news_nay.html?id=' + article.id +
-                                            '">' +
-                                            '<div class="pic"><img src="' + article.covers[0].url + '" alt="' + article
-                                            .title + '"/></div>' +
-                                            '<div class="words">' +
-                                            '<h5>' + article.title + '</h5><p>' + article.summary + '</p>' +
-                                            '<div class="bot"> <time>' + article.created_at +
-                                            '</time><em><i class="pro_ico"></i> 查看详情</em> </div>' +
-                                            ' </div></a>' + '</li>'
-                                    })
+                                    return '<li class="img_scale">' + '<a href="news_nay.html?id=' + article.id +
+                                        '">' +
+                                        '<div class="pic"><img src="' + article.covers[0].url + '" alt="' + article
+                                        .title + '"/></div>' +
+                                        '<div class="words">' +
+                                        '<h5>' + article.title + '</h5><p>' + article.summary + '</p>' +
+                                        '<div class="bot"> <time>' + article.created_at +
+                                        '</time><em><i class="pro_ico"></i> 查看详情</em> </div>' +
+                                        ' </div></a>' + '</li>'
+                                })
                                 $('.news.news_hid').append(articleHidElementList)
 
                                 articleElementList = articleList.map(function(article) {
@@ -136,52 +136,53 @@
                     }
                     fetchNewsList();
 
-                    function loadPagignations(pageSize) {
-                        var paginationList = ['<li data-offset="' + offset - 1 +
+                    function loadPagignations(totalPage) {
+                        var paginationList = ['<li data-offset="' + fetchData.offset - 1 +
                             '" class="fenye-p"><a href="#"><i class="fa fa-angle-left"></i></a></li>'
                         ];
 
-                        if (offset > 5) {
+                        if (fetchData.offset > 5) {
                             paginationList.push('<li><span>···</span></li>');
                         }
-                        if (offset < 5) {
-                            for (var index = 1; index <= pageSize; index++) {
+                        if (fetchData.offset < 5) {
+                            for (var index = 1; index <= totalPage; index++) {
                                 paginationList.push('<li data-offset="' + index - 1 + '"><a href="#">' + index + '</a></li>');
                                 if (index >= 5) {
                                     paginationList.push('<li><span>···</span></li>');
-                                    paginationList.push('<li data-offset="' + pageSize - 1 + '"><a href="#">' + pageSize + '</a></li>');
+                                    paginationList.push('<li data-offset="' + fetchData.totalPage - 1 + '"><a href="#">' + totalPage +
+                                        '</a></li>');
                                 }
                             }
-                        } else if (offset >= pageSize - 4) {
-                            for (var index = offset - 1; index <= pageSize; index++) {
+                        } else if (fetchData.offset >= totalPage - 4) {
+                            for (var index = offset - 1; index <= totalPage; index++) {
                                 paginationList.push('<li data-offset="' + index - 1 + '" ><a href="#">' + index + '</a></li>');
                             }
                         } else {
-                            for (var index = offset - 1; index <= offset + 3; index++) {
+                            for (var index = fetchData.offset - 1; index <= fetchData.offset + 3; index++) {
                                 paginationList.push('<li data-offset="' + index - 1 + '"><a href="#">' + index + '</a></li>');
                             }
                             paginationList.push('<li><span>···</span></li>');
-                            paginationList.push('<li data-offset="' + pageSize - 1 + '"><a href="#">' + pageSize + '</a></li>');
+                            paginationList.push('<li data-offset="' + totalPage - 1 + '"><a href="#">' + totalPage + '</a></li>');
                         }
-                        paginationList.push('<li data-offset="' + offset + 1 +
+                        paginationList.push('<li data-offset="' + fetchData.offset + 1 +
                             '" class="fenye-n"><a href="#"><i class="fa fa-angle-right"></i></a></li>')
 
                         $('.fenye ul').append(paginationList.join(''));
 
                         var paginationSelect = [];
-                        for (var i = 1; i <= pageSize; i++) {
+                        for (var i = 1; i <= totalPage; i++) {
                             paginationSelect.push('<option value="' + i - 1 + '">' + i + '</option>')
                         }
                         $('.fenye select').append(paginationSelect.join(''));
 
-                        $('.fenye ul li[data-offset]="' + offset + '"').addClass('active');
+                        $('.fenye ul li[data-offset]="' + fetchData.offset + '"').addClass('active');
                         $('.fenye ul li').on('click', function(e) {
                             var ele = e.target;
                             if (ele) {
                                 var offset = ele.dataset.offset;
                                 if (offset >= 0) {
                                     fetchData.offset = offset;
-                                    fetchNewsList();
+                                    fetchProductList();
                                 }
                             }
                         });
