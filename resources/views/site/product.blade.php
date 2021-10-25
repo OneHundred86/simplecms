@@ -230,7 +230,8 @@
                                 paginationList.push('<li data-offset="' + index - 1 + '"><a href="#">' + index + '</a></li>');
                                 if (index >= 5) {
                                     paginationList.push('<li><span>···</span></li>');
-                                    paginationList.push('<li data-offset="' + fetchData.totalPage - 1 + '"><a href="#">' + totalPage + '</a></li>');
+                                    paginationList.push('<li data-offset="' + fetchData.totalPage - 1 + '"><a href="#">' + totalPage +
+                                        '</a></li>');
                                 }
                             }
                         } else if (fetchData.offset >= totalPage - 4) {

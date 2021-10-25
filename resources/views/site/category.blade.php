@@ -193,10 +193,17 @@
                                 '</li>'
                         }
 
+<<<<<<< HEAD
                     function loadPagignations(totalPage) {
                         var paginationList = ['<li data-offset="' + (fetchData.offset - 1) +
                             '" class="fenye-p"><a href="#"><i class="fa fa-angle-left"></i></a></li>'
                         ];
+=======
+                        function loadPagignations(totalPage) {
+                            var paginationList = ['<li data-offset="' + (fetchData.offset - 1) +
+                                '" class="fenye-p"><a href="#"><i class="fa fa-angle-left"></i></a></li>'
+                            ];
+>>>>>>> eeeff47fb653933d507507e1ace562ebb968b3c4
 
                         if (fetchData.offset > 5) {
                             paginationList.push('<li><span>···</span></li>');
@@ -225,6 +232,7 @@
 
                         $('.fenye ul').append(paginationList.join(''));
 
+<<<<<<< HEAD
                         var paginationSelect = [];
                         for (var i = 1; i <= totalPage; i++) {
                             paginationSelect.push('<option value="' + i - 1 + '">' + i + '</option>')
@@ -239,12 +247,34 @@
                                 if (offset >= 0) {
                                     fetchData.offset = offset;
                                     fetchProductList();
+=======
+                            var paginationSelect = [];
+                            for (var i = 1; i <= totalPage; i++) {
+                                paginationSelect.push('<option value="' + i - 1 + '">' + i + '</option>')
+                            }
+                            $('.fenye select').append(paginationSelect.join(''));
+
+                            $('.fenye ul li[data-offset="' + fetchData.offset + '"]').addClass('active');
+                            $('.fenye ul li').on('click', function(e) {
+                                var ele = e.target;
+                                if (ele) {
+                                    var offset = ele.dataset.offset;
+                                    if (offset >= 0) {
+                                        fetchData.offset = offset;
+                                        fetchProductList();
+                                    }
+>>>>>>> eeeff47fb653933d507507e1ace562ebb968b3c4
                                 }
                             }
                         });
 
+<<<<<<< HEAD
                         $('.fenye select').value = fetchData.offset;
                     }
+=======
+                            $('.fenye select').value = fetchData.offset;
+                        }
+>>>>>>> eeeff47fb653933d507507e1ace562ebb968b3c4
 
                         var _content = []; //临时存储li循环内容
                         var loading = {
