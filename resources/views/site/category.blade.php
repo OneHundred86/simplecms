@@ -248,12 +248,12 @@
                         $('.fenye ul li').on('click', function(e) {
                             e.preventDefault();
 
-                            var ele = e.target;
+                            var ele = $(e.target).parents('li')[0];
                             if (ele) {
-                                var offset = ele.dataset.offset;
+                                var offset = $(ele).parents('li')[0].dataset.offset;
                                 if (offset >= 0) {
                                     fetchData.offset = offset;
-                                    fetchProductList();
+                                    fetchArticleList();
                                 }
                             }
                         });
