@@ -140,6 +140,7 @@
                                     $('#root_type').append(rootTypeList.join(''));
 
                                     $('#root_type > a').on('click', function(e) {
+                                        e.preventDefault();
                                         $('#root_type > a').removeClass('active');
                                         $(e.target).addClass('active');
                                         fetchData.type_id = e.target.dataset.typeid;
@@ -212,37 +213,41 @@
                         }
                         if (fetchData.offset < 5) {
                             for (var index = 1; index <= totalPage; index++) {
-                                paginationList.push('<li data-offset="' + index - 1 + '"><a href="#">' + index + '</a></li>');
+                                paginationList.push('<li data-offset="' + (index - 1) + '"><a href="#">' + index + '</a></li>');
                                 if (index >= 5) {
                                     paginationList.push('<li><span>···</span></li>');
-                                    paginationList.push('<li data-offset="' + fetchData.totalPage - 1 + '"><a href="#">' + totalPage +
+                                    paginationList.push('<li data-offset="' + (fetchData.totalPage - 1) + '"><a href="#">' + totalPage +
                                         '</a></li>');
                                 }
                             }
                         } else if (fetchData.offset >= totalPage - 4) {
                             for (var index = offset - 1; index <= totalPage; index++) {
-                                paginationList.push('<li data-offset="' + index - 1 + '" ><a href="#">' + index + '</a></li>');
+                                paginationList.push('<li data-offset="' + (index - 1) + '" ><a href="#">' + index + '</a></li>');
                             }
                         } else {
                             for (var index = fetchData.offset - 1; index <= fetchData.offset + 3; index++) {
-                                paginationList.push('<li data-offset="' + index - 1 + '"><a href="#">' + index + '</a></li>');
+                                paginationList.push('<li data-offset="' + (index - 1) + '"><a href="#">' + index + '</a></li>');
                             }
                             paginationList.push('<li><span>···</span></li>');
-                            paginationList.push('<li data-offset="' + totalPage - 1 + '"><a href="#">' + totalPage + '</a></li>');
+                            paginationList.push('<li data-offset="' + (totalPage - 1) + '"><a href="#">' + totalPage + '</a></li>');
                         }
-                        paginationList.push('<li data-offset="' + fetchData.offset + 1 +
+                        paginationList.push('<li data-offset="' + (fetchData.offset + 1) +
                             '" class="fenye-n"><a href="#"><i class="fa fa-angle-right"></i></a></li>')
 
+                        $('.fenye ul').empty();
                         $('.fenye ul').append(paginationList.join(''));
 
                         var paginationSelect = [];
                         for (var i = 1; i <= totalPage; i++) {
                             paginationSelect.push('<option value="' + i - 1 + '">' + i + '</option>')
                         }
+                        $('.fenye select').empty();
                         $('.fenye select').append(paginationSelect.join(''));
 
                         $('.fenye ul li[data-offset="' + fetchData.offset + '"]').addClass('active');
                         $('.fenye ul li').on('click', function(e) {
+                            e.preventDefault();
+
                             var ele = e.target;
                             if (ele) {
                                 var offset = ele.dataset.offset;
