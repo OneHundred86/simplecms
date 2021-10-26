@@ -10,6 +10,7 @@ class Article extends Model
     use SoftDeletes;
     protected $table = "article";
     protected $hidden = ['deleted_at'];
+    protected $appends = ['url'];
 
     // 文章状态
     const STATUS_DRAFT = 0;     # 草稿
@@ -56,5 +57,13 @@ class Article extends Model
                 'img' => $img,
             ]);
         }
+    }
+
+    /**
+     * 获取稿件的url
+     */
+    public function getUrlAttribute()
+    {
+        return sprintf("%s/article/%s", env('SITE_URL'), $this->id);
     }
 }

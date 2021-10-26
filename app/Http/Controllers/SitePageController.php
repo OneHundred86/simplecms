@@ -19,6 +19,7 @@ class SitePageController
 
         return view('site/category', [
             'category' => $category,
+            'type_id' => $request->type_id,
         ]);
     }
 
@@ -32,6 +33,9 @@ class SitePageController
         }
 
         $article->load('type')->load('covers');
+
+        $article->read_cnt ++;
+        $article->save();
 
         return view('site/article', [
             'article' => $article,
@@ -67,7 +71,27 @@ class SitePageController
 
     public function index()
     {
-        return view('site/index');
+        /*
+        // 产品列表，取8条
+        $product_list = Article::with('covers')
+            ->where('category', Article::CATEGORY_PRODUCT)
+            ->where('status', Article::STATUS_PUB)
+            ->orderBy('id', 'desc')
+            ->limit(8)
+            ->get();
+        // 新闻列表，取4条
+        $news_list = Article::with('covers')
+            ->where('category', Article::CATEGORY_NEWS)
+            ->where('status', Article::STATUS_PUB)
+            ->orderBy('id', 'desc')
+            ->limit(4)
+            ->get();
+        */
+
+        return view('site/index', [
+            // 'product_list' => $product_list,
+            // 'news_list' => $news_list,
+        ]);
     }
 
     public function prod_nay()

@@ -3,11 +3,23 @@
     _CAT = {{ $category }};
 
     <?php
-    $category_name = '产品中心';
-    $category_name_en = 'Product center';
-    $category_detail_url = '/prod_nay.html';
-    $banner_img = '/images/ban_prod.jpg';
-    $banner_name = '';
+    if($category == \App\Model\Article::CATEGORY_PRODUCT){
+        $category_name = '产品中心';
+        $category_detail_url = '/prod_nay.html';
+        $banner_img = '/images/ban_prod.jpg';
+        $banner_name = '';
+    }elseif($category == \App\Model\Article::CATEGORY_APP){
+        $category_name = '行业应用';
+        $category_detail_url = '#';
+        $banner_img = '/images/ban_art.jpg';
+        $banner_name = '';
+    }elseif($category == \App\Model\Article::CATEGORY_NEWS){
+        $category_name = '新闻中心';
+        $category_detail_url = '#';
+        $banner_img = '/images/ban_new.jpg';
+        $banner_name = '';
+    }
+
     ?>
 </script>
 @section('banner')
@@ -17,7 +29,7 @@
             <div class="ind_tit">
                 <h3>{{ $banner_name }}</h3>
                 <figure>
-                    <h4>{{ $category_name_en }}</h4>
+                    <h4>{{ $category_name }}</h4>
                 </figure>
 
                 <i class="ind_tit_ico2"></i>
@@ -32,7 +44,7 @@
             <div class="page_pos">
                 <img src="/images/sit.gif" alt="当前位置" />
                 <span>当前位置：</span>
-                <a href="#">首页</a>
+                <a href="/index.html">首页</a>
                 <span>&gt;</span>
                 <a href="#">{{ $category_name }}</a>
             </div>

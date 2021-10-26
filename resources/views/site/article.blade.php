@@ -1,14 +1,31 @@
 @extends('site.page_base')
 <script>
     <?php
-    $category = 1;
-    $category_name = '产品中心';
-    $category_url = 'product.html';
-    $category_name_en = 'Product center';
-    $category_detail_name = '产品详情';
-    $category_detail_url = 'prod_nay.html';
-    $banner_img = 'images/ban_prod.jpg';
-    $banner_name = '';
+//    $category = 1;
+//    $category_name = '产品中心';
+//    $category_url = 'product.html';
+//    $category_name_en = 'Product center';
+//    $category_detail_name = '产品详情';
+//    $category_detail_url = 'prod_nay.html';
+//    $banner_img = 'images/ban_prod.jpg';
+//    $banner_name = '';
+
+    $category = $article->category;
+    $category_url = "/category/" . $category;
+
+    if($category == \App\Model\Article::CATEGORY_PRODUCT){
+        $category_name = '产品中心';
+        $banner_img = '/images/ban_prod.jpg';
+        $banner_name = '';
+    }elseif($category == \App\Model\Article::CATEGORY_APP){
+        $category_name = '行业应用';
+        $banner_img = '/images/ban_art.jpg';
+        $banner_name = '';
+    }elseif($category == \App\Model\Article::CATEGORY_NEWS){
+        $category_name = '新闻中心';
+        $banner_img = '/images/ban_new.jpg';
+        $banner_name = '';
+    }
     ?>
 </script>
 @section('banner')
@@ -18,7 +35,7 @@
             <div class="ind_tit">
                 <h3>{{ $banner_name }}</h3>
                 <figure>
-                    <h4>{{ $category_name_en }}</h4>
+                    <h4>{{ $category_name }}</h4>
                 </figure>
 
                 <i class="ind_tit_ico2"></i>
@@ -31,13 +48,11 @@
     <main class="page_main">
         <div class="page_pos_box layout">
             <div class="page_pos">
-                <img src=" images/sit.gif" alt="当前位置" />
+                <img src="/images/sit.gif" alt="当前位置" />
                 <span>当前位置：</span>
-                <a href="index.html">首页</a>
+                <a href="/index.html">首页</a>
                 <span>&gt;</span>
                 <a hrf="{{ $category_url }}">{{ $category_name }}</a>
-                <span>&gt;</span>
-                <a href="{{ $category_detail_url }}">{{ $category_detail_name }}</a>
             </div>
 
         </div>
@@ -46,7 +61,6 @@
                 <dl>
                     <dt><span>
                             {{ $category_name }} </span><i class="fa fa-angle-down"></i></dt>
-
                 </dl>
             </li>
         </ul>

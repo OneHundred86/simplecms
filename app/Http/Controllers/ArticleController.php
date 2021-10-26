@@ -26,7 +26,7 @@ class ArticleController extends Controller
 
         $total = $builder->count();
         $list = $builder->with('covers')
-            ->select('id', 'title', 'category', 'type_id')
+            ->select('id', 'title', 'content', 'category', 'type_id')
             ->orderBy('id', 'desc')
             ->offset($request->offset)
             ->limit($request->limit)
