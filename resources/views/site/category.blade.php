@@ -245,11 +245,10 @@
 
                 function itemTemplate(article) {
                     return '<li>' +
-                        '<a href="{{ $category_detail_url }}?id=' + article.id +
-                        '"><div class="pro_pic"><img class="show" src="' +
-                        article.covers[0] + '" alt="' + article.title + '" /></div>' +
-                        '<div class="pro_words"><div class="pro_bg"><h5><a href="{{ $category_detail_url }}?id="' +
-                        article.id + '>' + article.title + '</a></h5> </div> </div>' +
+                        '<a href="'+ article.url +'"><div class="pro_pic"><img class="show" src="' +
+                        article.covers[0].img + '" alt="' + article.title + '" /></div>' +
+                        '<div class="pro_words"><div class="pro_bg"><h5><a href="' +
+                        article.url + '">' + article.title + '</a></h5> </div> </div>' +
                         '</li>'
                 }
 
