@@ -138,7 +138,6 @@
                         </div>
                     </div>
 
-
                     <div class="ind3 pro_view3">
                         <div class="ind_tit">
                             <h3>详细介绍</h3>
@@ -189,11 +188,11 @@
                     dataType: 'json',
                     contentType: 'application/json',
                     data: {
-                        category: _CAT,
+                        category: {{ $category }},
                     },
                     success: function(articleTypeResp) {
                         $('#root_type').empty();
-                        $('#root_type').append('<a data-typeId="" href="' + {{ $category_url }} + '" >全部</a>')
+                        $('#root_type').append('<a data-typeId="" href="{{ $category_url }}" >全部</a>')
 
                         if (articleTypeResp.data) {
                             articleTypeList = articleTypeResp.data.list;
@@ -201,10 +200,9 @@
                                 return !x.parent_id
                             }).map(function(x) {
                                 if ({{ $article->type->parent_id }} === x.id) {
-                                    return '<a class="active" href="' + {{ $category_url }} +
-                                        '?root_type=' + x.id + '">' + x.name + '</a>'
+                                    return '<a class="active" href="{{ $category_url }}?root_type=' + x.id + '">' + x.name + '</a>'
                                 }
-                                return '<a href="' + {{ $category_url }} + '?root_type=' + x.id + '">' +
+                                return '<a href="{{ $category_url }}?root_type=' + x.id + '">' +
                                     x.name + '</a>'
                             })
                             $('#root_type').append(rootTypeList.join(''));
@@ -212,7 +210,6 @@
                     }
                 })
             }
-            initArticleType();
 
             function loadSubTypeList() {
                 var subTypeList = articleTypeList.filter(function(type) {
@@ -224,20 +221,13 @@
                         display: 'block'
                     });
                     $('#sub_type').empty();
-                    $('#sub_type').append('<a href="' + {{ $category_url }} + '?root_type=' +
-                        {{ $article->type->parent_id }} +
-                        '">全部</a>')
+                    $('#sub_type').append('<a href="{{ $category_url }}?root_type={{ $article->type->parent_id }}">全部</a>')
 
                     subTypeListMap = subTypeList.map(function(x) {
                         if ($article.type.id === x.id.toString()) {
-                            return '<a class="active" href="' + {{ $category_url }} + '?root_type=' +
-                                {{ $article->type->parent_id }} + '&sub_type=' + {{ $article->type->id }} + '">' +
-                                x
-                                .name + '</a>'
+                            return '<a class="active" href="{{ $category_url }}?root_type={{ $article->type->parent_id }}&sub_type={{ $article->type->id }}">' + x.name + '</a>'
                         }
-                        return '<a' + 'href="' + {{ $category_url }} + '?root_type=' +
-                            {{ $article->type->parent_id }} +
-                            '&sub_type=' + {{ $article->type->id }} + '">' + x.name + '</a>'
+                        return '<a' + 'href="{{ $category_url }}?root_type={{ $article->type->parent_id }}&sub_type={{ $article->type->id }}">' + x.name + '</a>'
                     })
                 } else {
                     $('.sub_type_container').css({
@@ -245,23 +235,26 @@
                     });
                 }
             }
-            loadSubTypeList();
+	    if($('#root_type').length > 0) {
+		    initArticleType();
+		    loadSubTypeList();
+	    }
 
             setContent();
             setCovers();
 
             function setContent() {
                 $('#pro_title').html(articleDetail.title);
-                $('#pro_summary').html(articleDetail.summary);
-                $('#pro_date').html(articleDetail.updated_at);
-                $('#pro_count').html(articleDetail.read_cnt);
+                $('#pro_summary').append(articleDetail.summary);
+                $('#pro_date').append(articleDetail.updated_at);
+                $('#pro_count').append(articleDetail.read_cnt);
                 $('#pro_content').html(articleDetail.content);
             }
 
             function setCovers() {
                 var coverList = articleDetail.covers || [];
                 for (const cover of coverList) {
-                    $('.swipper-wrapper').append('<div class="swiper-slide"><div class="pic"><img src="' + cover.url +
+                    $('.swiper-wrapper').append('<div class="swiper-slide"><div class="pic"><img src="' + cover.url +
                         '" /></div></div>')
                 }
             }
