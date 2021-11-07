@@ -232,7 +232,7 @@
                         '<a href="{{ $category_url }}?root_type={{ $article->type->parent_id }}">全部</a>')
 
                     subTypeListMap = subTypeList.map(function(x) {
-                        if ('{{$article.type.id}}' === x.id.toString()) {
+                        if ('{{$article->type->id}}' === x.id.toString()) {
                             return '<a class="active" href="{{ $category_url }}?root_type={{ $article->type->parent_id }}&sub_type={{ $article->type->id }}">' +
                                 x.name + '</a>'
                         }
