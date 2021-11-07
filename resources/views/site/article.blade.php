@@ -17,6 +17,7 @@
         $category_name = '产品中心';
         $banner_img = '/images/ban_prod.jpg';
         $banner_name = '';
+        $detail_text = '产品详情';
     } elseif ($category == \App\Model\Article::CATEGORY_APP) {
         $category_name = '行业应用';
         $banner_img = '/images/ban_art.jpg';
@@ -25,6 +26,7 @@
         $category_name = '新闻中心';
         $banner_img = '/images/ban_new.jpg';
         $banner_name = '';
+        $detail_text = ' 行业新闻';
     }
     ?>
 </script>
@@ -53,6 +55,8 @@
                 <a href="/index.html">首页</a>
                 <span>&gt;</span>
                 <a hrf="{{ $category_url }}">{{ $category_name }}</a>
+                <span>&gt;</span>
+                <a hrf="#">{{ $detail_text }}</a>
             </div>
 
         </div>
@@ -149,6 +153,8 @@
                         <div class="pro_nay" id="pro_content">
                         </div>
                     </div>
+                    <script>
+                    </script>
                 @endif
 
                 @if ($category == \App\Model\Article::CATEGORY_NEWS)
@@ -199,8 +205,9 @@
                             var rootTypeList = articleTypeList.filter(function(x) {
                                 return !x.parent_id
                             }).map(function(x) {
-                                if ({{ $article->type->parent_id }} === x.id) {
-                                    return '<a class="active" href="{{ $category_url }}?root_type=' + x.id + '">' + x.name + '</a>'
+                                if ('{{ $article->type->parent_id }}' === x.id.toString()) {
+                                    return '<a class="active" href="{{ $category_url }}?root_type=' + x
+                                        .id + '">' + x.name + '</a>'
                                 }
                                 return '<a href="{{ $category_url }}?root_type=' + x.id + '">' +
                                     x.name + '</a>'
@@ -213,7 +220,7 @@
 
             function loadSubTypeList() {
                 var subTypeList = articleTypeList.filter(function(type) {
-                    return type.parent_id === {{ $article->type->parent_id }};
+                    return type.parent_id && type.parent_id.toString() === '{{ $article->type->parent_id }}';
                 });
 
                 if (subTypeList.length > 0) {
@@ -221,13 +228,17 @@
                         display: 'block'
                     });
                     $('#sub_type').empty();
-                    $('#sub_type').append('<a href="{{ $category_url }}?root_type={{ $article->type->parent_id }}">全部</a>')
+                    $('#sub_type').append(
+                        '<a href="{{ $category_url }}?root_type={{ $article->type->parent_id }}">全部</a>')
 
                     subTypeListMap = subTypeList.map(function(x) {
-                        if ($article.type.id === x.id.toString()) {
-                            return '<a class="active" href="{{ $category_url }}?root_type={{ $article->type->parent_id }}&sub_type={{ $article->type->id }}">' + x.name + '</a>'
+                        if ('{{$article.type.id}}' === x.id.toString()) {
+                            return '<a class="active" href="{{ $category_url }}?root_type={{ $article->type->parent_id }}&sub_type={{ $article->type->id }}">' +
+                                x.name + '</a>'
                         }
-                        return '<a' + 'href="{{ $category_url }}?root_type={{ $article->type->parent_id }}&sub_type={{ $article->type->id }}">' + x.name + '</a>'
+                        return '<a' +
+                            'href="{{ $category_url }}?root_type={{ $article->type->parent_id }}&sub_type={{ $article->type->id }}">' +
+                            x.name + '</a>'
                     })
                 } else {
                     $('.sub_type_container').css({
@@ -235,10 +246,10 @@
                     });
                 }
             }
-	    if($('#root_type').length > 0) {
-		    initArticleType();
-		    loadSubTypeList();
-	    }
+            if ($('#root_type').length > 0) {
+                initArticleType();
+                loadSubTypeList();
+            }
 
             setContent();
             setCovers();
@@ -253,9 +264,56 @@
 
             function setCovers() {
                 var coverList = articleDetail.covers || [];
-                for (const cover of coverList) {
-                    $('.swiper-wrapper').append('<div class="swiper-slide"><div class="pic"><img src="' + cover.url +
-                        '" /></div></div>')
+
+                if ($(".pro_view1").length > 0) {
+
+                    for (const cover of coverList) {
+                        $('.swiper-wrapper').append('<div class="swiper-slide"><div class="pic"><img src="' + cover.img +
+                            '" /></div></div>')
+                    }
+
+                    var pro_view1_bd = new Swiper('.pro_view1_bd .swiper-container', {
+                        observer: true,
+                        observeParents: true,
+                        effect: 'fade',
+                        on: {
+                            slideChangeTransitionStart: function() {
+                                pro_view1_hd.slideTo(this.realIndex, 600, false);
+                                $(".pro_view1_hd .swiper-slide").eq(this.activeIndex).addClass("active").siblings()
+                                    .removeClass("active");
+                            },
+                        },
+                    });
+
+                    var pro_view1_hd = new Swiper('.pro_view1_hd .swiper-container', {
+                        observer: true,
+                        observeParents: true,
+                        slidesPerView: "auto",
+                        spaceBetween: 4,
+                        on: {
+                            slideChangeTransitionStart: function() {
+                                pro_view1_bd.slideTo(this.realIndex, 600, false);
+                            },
+                        },
+                    });
+
+                    $(".pro_view1_hd .swiper-slide").click(function() {
+                        num = $(this).index();
+                        $(this).addClass("active").siblings().removeClass("active");
+                        pro_view1_bd.slideTo(num, 600, false);
+
+                        //点击后导航滑动
+                        var _pag = $(".pro_view1_hd .swiper-slide.active").index();
+                        var _num = $(".pro_view1_hd .swiper-slide").length - 1;
+                        if (_pag > 1 && _pag != _num) {
+                            _pag = _pag - 1;
+                            pro_view1_hd.slideTo(_pag, 600, false);
+                        } else if (_pag == _num) {
+                            pro_view1_hd.slideTo(_pag - 2, 600, false);
+                        } else {
+                            pro_view1_hd.slideTo(0, 600, false);
+                        }
+                    });
                 }
             }
         </script>
