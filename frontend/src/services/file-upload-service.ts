@@ -8,7 +8,7 @@ class FileUploadService {
     }
 
     postVideo = (form) => {
-        return postFormData<FileUploadResponse>(`/admin/upload/video`, form);
+        return postFormData<FileUploadResponse>(`/admin/upload/vedio`, form);
     }
 }
 

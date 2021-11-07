@@ -1,14 +1,26 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { Box, Button, Grid, IconButton, ImageList, ImageListItem, ImageListItemBar, MenuItem, Paper, TextField, Typography } from '@mui/material';
+import {
+    Box,
+    Button,
+    Grid,
+    IconButton,
+    ImageList,
+    ImageListItem,
+    ImageListItemBar,
+    MenuItem,
+    Paper,
+    TextField,
+    Typography,
+} from '@mui/material';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { Article, ArticleType, ArticleTypeListResponse } from '../../../models';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import ClassicEditor from '@xccjh/xccjh-ckeditor5-video-file-upload';
 import { ActionService, ArticleDataService, ArticleTypeDataService, FileUploadService } from '../../../services';
-import { UploadAdaptorPlugin } from '../../../components/form/upload-adaptor-plugin';
 import { switchMap } from 'rxjs';
 import { useHistory } from 'react-router';
 import { useSnackbar } from 'notistack';
+import { CKEditorConfig } from '../../../components/editor';
 
 export const EditForm: React.FC<{ detail: Article }> = ({ detail }) => {
     const [formDetail, setFormDetail] = useState<Article>(detail);
@@ -30,22 +42,22 @@ export const EditForm: React.FC<{ detail: Article }> = ({ detail }) => {
                 switchMap(() => {
                     return !formDetail.id
                         ? ArticleDataService.create({
-                            category: 3,
-                            content: formDetail.content,
-                            summary: formDetail.summary,
-                            title: formDetail.title,
-                            type_id: formDetail.type_id,
-                            covers: formDetail.covers.map((x) => x.img),
-                        })
+                              category: 3,
+                              content: formDetail.content,
+                              summary: formDetail.summary,
+                              title: formDetail.title,
+                              type_id: formDetail.type_id,
+                              covers: formDetail.covers.map((x) => x.img),
+                          })
                         : ArticleDataService.edit({
-                            content: formDetail.content,
-                            id: formDetail.id,
-                            summary: formDetail.summary,
-                            title: formDetail.title,
-                            type_id: formDetail.type_id,
-                            covers: formDetail.covers.map((x) => x.img),
-                        });
-                }),
+                              content: formDetail.content,
+                              id: formDetail.id,
+                              summary: formDetail.summary,
+                              title: formDetail.title,
+                              type_id: formDetail.type_id,
+                              covers: formDetail.covers.map((x) => x.img),
+                          });
+                })
             )
             .subscribe({
                 next: (resp) => {
@@ -103,7 +115,6 @@ export const EditForm: React.FC<{ detail: Article }> = ({ detail }) => {
             FileUploadService.postImage(formData).subscribe({
                 next: (resp) => {
                     if (resp.errcode === 0) {
-
                         setFormDetail((state) => {
                             const covers = state.covers ?? [];
                             covers.push({
@@ -123,7 +134,8 @@ export const EditForm: React.FC<{ detail: Article }> = ({ detail }) => {
                             variant: 'error',
                         });
                     }
-                }, error: err => {
+                },
+                error: (err) => {
                     console.error('fail to upload cover', err);
                     snackBar.enqueueSnackbar(' 上传封面失败', {
                         variant: 'error',
@@ -180,12 +192,7 @@ export const EditForm: React.FC<{ detail: Article }> = ({ detail }) => {
                     </TextField>
                 </Grid>
                 <Grid item xs={12}>
-                    <TextField
-                        fullWidth
-                        label='标题'
-                        value={formDetail.title}
-                        onChange={updateInputValue('title')}
-                    />
+                    <TextField fullWidth label='标题' value={formDetail.title} onChange={updateInputValue('title')} />
                 </Grid>
                 <Grid item xs={12}>
                     <TextField
@@ -223,10 +230,12 @@ export const EditForm: React.FC<{ detail: Article }> = ({ detail }) => {
                                         <ImageListItem key={item.id}>
                                             <img src={`${item.img}`} srcSet={`${item.img}`} loading='lazy' alt={''} />
                                             <ImageListItemBar
-                                                position="top"
-                                                actionPosition="right"
+                                                position='top'
+                                                actionPosition='right'
                                                 actionIcon={
-                                                    <IconButton onClick={() => handleDeleteCover(index)} sx={{ color: 'red' }} >
+                                                    <IconButton
+                                                        onClick={() => handleDeleteCover(index)}
+                                                        sx={{ color: 'red' }}>
                                                         <CancelIcon />
                                                     </IconButton>
                                                 }
@@ -252,9 +261,7 @@ export const EditForm: React.FC<{ detail: Article }> = ({ detail }) => {
                                 }}
                                 xs={12}>
                                 <CKEditor
-                                    config={{
-                                        extraPlugins: [UploadAdaptorPlugin],
-                                    }}
+                                    config={CKEditorConfig}
                                     editor={ClassicEditor}
                                     data={formDetail.content}
                                     onChange={handleContentUpdate}
