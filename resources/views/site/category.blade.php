@@ -16,7 +16,7 @@
         $banner_img = '/images/ban_art.jpg';
         $banner_name = '';
         $ext_list_css = 'effect case baguetteBox clearfix';
-        $ext_list_css_mobile = 'baguetteBox';
+        $ext_list_css_mobile = 'm_pro baguetteBox';
     } elseif ($category == \App\Model\Article::CATEGORY_NEWS) {
         $category_name = '新闻中心';
         $category_detail_url = '#';
@@ -66,6 +66,20 @@
         <section class="page_con">
             <div class="layout">
                 <style>
+                    .m_news {
+                        display: none;
+                    }
+
+                    @media only screen and (min-width: 0) and (max-width: 1024px) {
+                        .pc_news {
+                            display: none;
+                        }
+
+                        .m_news {
+                            display: flex;
+                        }
+                    }
+
                     @media only screen and (min-width: 0) and (max-width: 1024px) {
                         .page_con {
                             padding-top: .32rem;
