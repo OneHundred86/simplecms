@@ -79,22 +79,6 @@
                     }
 
                 </style>
-                <div class="page_nav_hd">
-                    <div class="left"><span>全部</span></div>
-                    <ul class="right">
-                        <li><a href="javascript:void(0);">更多选项<i class="fa fa-angle-down"></i></a></li>
-                    </ul>
-                </div>
-                <ul class="page_nav_bd">
-                    <li>
-                        <dl>
-                            <dt><span>分类</span><i class="fa fa-angle-down"></i></dt>
-                            <dd id="root_type">
-                                <a class='active' href="#">全部</a>
-                            </dd>
-                        </dl>
-                    </li>
-                </ul>
 
                 <div class="pro_view1">
                     <div class="pro_view1_left">
@@ -150,49 +134,6 @@
                     queryString[i[0].toString()] = i[1].toString();
                 }
             });
-
-            function initArticleType() {
-                $.ajax({
-                    url: '/article/type/list',
-                    dataType: 'json',
-                    contentType: 'application/json',
-                    data: {
-                        category: {{ $category }},
-                    },
-                    success: function(articleTypeResp) {
-                        $('#root_type').empty();
-                        $('#root_type').append('<a data-typeId="" href="#" >全部</a>')
-                        if (!queryString['root_type']) {
-                            $('#root_type > a').addClass('active');
-                        }
-
-                        if (articleTypeResp.data) {
-                            articleTypeList = articleTypeResp.data.list;
-
-                            var rootTypeList = articleTypeList.filter(function(x) {
-                                return !x.parent_id
-                            }).map(function(x) {
-                                if (queryString['root_type'] === x.id) {
-                                    return '<a class="active" href="#" data-typeId="' + x.id + '" >' + x
-                                        .name + '</a>'
-                                }
-                                return '<a href="#" data-typeId="' + x.id + '" >' + x.name + '</a>'
-                            })
-                            $('#root_type').append(rootTypeList.join(''));
-
-                            $('#root_type > a').on('click', function(e) {
-                                $('#root_type > a').removeClass('active');
-                                $(e.target).addClass('active');
-
-                                var type_id = e.target.dataset.typeid;
-                                window.location.href = '' + {{ $category_url }} + '.?root_type=' +
-                                    type_id;
-                            })
-                        }
-                    }
-                })
-            }
-            initArticleType();
 
             var articleDetail = @json($article);
             setContent();
