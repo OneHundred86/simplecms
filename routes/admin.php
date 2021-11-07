@@ -33,7 +33,7 @@ Route::group(
 
 
         Route::post('/upload/image', 'MaterialController@uploadImage');
-        Route::post('/upload/vedio', 'MaterialController@uploadVedio');
+        Route::post('/upload/video', 'MaterialController@uploadVideo');
 
     }
 );

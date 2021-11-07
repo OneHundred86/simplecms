@@ -33,7 +33,7 @@ class MaterialController extends Controller
         ]);
     }
 
-    public function uploadVedio(Request $request)
+    public function uploadVideo(Request $request)
     {
         $this->validate($request, [
             'file' => 'required',
@@ -51,7 +51,7 @@ class MaterialController extends Controller
             return $this->e(sprintf("文件不能大于%sMB", $size_limit));
         }
 
-        $path = sprintf("public/uploads/vedios/%s/%s", date('Ymd'), date('His'));
+        $path = sprintf("public/uploads/videos/%s/%s", date('Ymd'), date('His'));
 
         $filename = $file->getClientOriginalName();
 
