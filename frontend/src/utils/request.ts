@@ -17,7 +17,7 @@ export function loadCSRFToken(token) {
     axiosInstance.defaults.headers.common['X-CSRF-TOKEN'] = token;
 }
 
-export const request = <T>(url: string, method: Method, config: AxiosRequestConfig = {}) => {
+export const request = <T>(url: string, method: Method, config: AxiosRequestConfig = {}, touchAuth = false) => {
     return of({}).pipe(
         tap(() => LoadingStateService.setLoading(true)),
         mergeMap(() =>
@@ -30,7 +30,10 @@ export const request = <T>(url: string, method: Method, config: AxiosRequestConf
         ),
         map((resp) => resp.data),
         catchError((error) => {
-            return throwError(error);
+            if (error.response.status === 401 && !touchAuth) {
+                window.location.reload();
+            }
+            return throwError(() => error);
         }),
         finalize(() => LoadingStateService.setLoading(false))
     );

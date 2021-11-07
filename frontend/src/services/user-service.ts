@@ -3,7 +3,7 @@ import { UserInfoResponse } from "../models";
 
 class UserService {
     getUserInfo = () => {
-        return request<UserInfoResponse>(`/admin/self/user/info`, "GET");
+        return request<UserInfoResponse>(`/admin/self/user/info`, "GET", null, true);
     };
 }
 
